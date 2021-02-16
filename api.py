@@ -16,7 +16,7 @@ if __name__=="__main__":
     line = 0
     for row in y:
         tab.append(row)
-        tab.append('')
+        
         line = line+1    # calcul le nombre de ligne dans le fichier
     print(tab)
     
