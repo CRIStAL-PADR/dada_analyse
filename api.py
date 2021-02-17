@@ -1,22 +1,34 @@
 # -*-coding: utf-*-
 import file
-import numpy
-tab=[]
+tab = []
+arr = []
 
-class File:
+def load():
+    return file.content
 
-    def load(self):
-        return file.content
-    
+class Tableau:
+    def __init__(self, ligne, colonne, data):
+        self.ligne = ligne
+        self.colonne = colonne
+        self.data = data
 
+    def affiche(self, tab):
+        for i in range(len(tab)):
+            for j in range(len(tab[i])):
+                print(tab[i][j], end = ' ')
+            print()
+        
+    def stockerDansTab(self):
+        for x in range(self.ligne):
+            for y in range(self.colonne):
+                arr.append(self.data)
+            tab.append(arr)
 
 if __name__=="__main__":
-    x = File()
-    y = x.load()
-    line = 0
-    for row in y:
-        tab.append(row)
-        
-        line = line+1    # calcul le nombre de ligne dans le fichier
-    print(tab)
     
+    x = load()
+
+    tableau = Tableau(10,5,1)
+    tableau.stockerDansTab()
+    tableau.affiche(tab)
+   
