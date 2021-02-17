@@ -24,11 +24,9 @@ class Tableau:
     def compterLigne(self, l, value):
         """retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
         count = 0
-        for i  in range(len(self.data)):
-            for j in range(len(self.data[l])):
-                if (value == self.data[l][j]):
-                    count = count+1
-                    break
+        for j in range(len(self.data[l])):
+            if (self.data[l][j]==value):
+                count = count+1        
         return count
           
     
@@ -49,13 +47,13 @@ if __name__=="__main__":
     
     x = load()
 
-    tableau = Tableau(9,5, 'r')
+    tableau = Tableau(5,5, 'r')
     tableau.initialize()
-    tableau.data[0][2] = 0
+    tableau.data[1][1] = 7
     tableau.data[1][2] = 7
-    tableau.data[2][2] = 7
-    tableau.data[5][2] = 7
+    tableau.data[1][3] = 7
+    tableau.data[4][2] = 7
     tableau.affiche()
   
     print(tableau.compteColone(2,7))
-    print(tableau.compterLigne(2,7))
+    print(tableau.compterLigne(1,7))
