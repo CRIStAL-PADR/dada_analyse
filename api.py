@@ -49,8 +49,8 @@ class Tableau:
     
     def getList(self, content):
        return [*content]
-            
-    def getIndiceFromKey(self, content): 
+    
+    def getFileFromIndex(self, index, content):
         """
         # savoir boucle sur les éléments d'un tableau
         # savoir boucle sur le contenu du dictionnaire (clefs, et la valeurs)
@@ -59,20 +59,18 @@ class Tableau:
         # "file2.h" => 6 
         # faire une seconde fonction qui retourner l'indice et prend en paramètre le nom du fichier, ajouter d'autre paramètre si nécessaire (mais pas de variable globale) """
         i = 0
-        tab = []
+        keys = []
         list = self.getList(content)
-        print(len(list))
         while (i< len(list)):
-            tab.append(i)
+            keys.append(i)
             print("a l'indice {} se trouve la clé {}".format(i, list[i]))
             i+=1
-        return tab    
-                
-                
+        print(keys)
+        if index == keys[index]:
+            return list[index]
             
 if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.affiche()
-    print(tableau.getIndiceFromKey(x))
+    print(tableau.getFileFromIndex(4,x))
