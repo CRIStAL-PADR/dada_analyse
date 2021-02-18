@@ -10,7 +10,8 @@ class Tableau:
         self.colonne = colonne
         self.defaultValue = defaultValue
         self.data = []
-        
+        self.fillWithValue(self.defaultValue)
+                
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
         count = 0
@@ -36,23 +37,30 @@ class Tableau:
                 print(self.data[i][j], end  =' ')
             print()
                 
-    def initialize(self):
-        for x in range(self.ligne):
-            sousTab = []
-            for y in range(self.colonne):
-                sousTab.append(self.defaultValue)
-            self.data.append(sousTab)
+    def fillWithValue(self, newValue):
+        self.data = [] 
+        for x in range(self.ligne):       # compte x et fait ce qui à l'intérieur self.ligne fois.
+            sousTab = []                  # sousTab = [] <= list
+            for y in range(self.colonne): # compte y et fait ce qui à l'intérieur self.ligne fois.
+                sousTab.append(newValue)  # sousTab.push_back newValue                                           
+            self.data.append(sousTab)     # 
 
+def remplir(tab, content):
+    # savoir boucle sur les éléments d'un tableau
+    # savoir boucle sur le contenu du dictionnaire (clefs, et la valeurs)
+    # savoir convertir un clef d'un dictionnaire en un indice. 
+        # "file1.cpp" => 0
+        # "file2.h" => 6 
+        # faire une seconde fonction qui retourner l'indice et prend en paramètre le nom du fichier, ajouter d'autre paramètre si nécessaire (mais pas de variable globale)
+        
 if __name__=="__main__":
     
-    x = load()
-
-    tableau = Tableau(5,5, 'r')
-    tableau.initialize()
-    tableau.data[1][1] = 7
-    tableau.data[1][2] = 7
-    tableau.data[1][3] = 7
-    tableau.data[4][2] = 7
+    x = load() 
+    tableau = Tableau(len(x), len(x))
+    tableau.data[1][1] = 1
+    tableau.data[1][2] = 1
+    tableau.data[1][3] = 1
+    tableau.data[4][2] = 1
     tableau.affiche()
   
     print(tableau.compteColone(2,7))
