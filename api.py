@@ -33,7 +33,12 @@ class Tableau:
           
     
     def affiche(self, content):
-        for i in range(len(self.data)):
+         liste = self.getList(content)
+         for x in range(len(liste)):
+             print('____' ,end = '')
+
+         for i in range(len(self.data)):
+            print('') 
             c = self.compterLigne(i,1)
             key = self.getFileFromIndex(i,content)
             print(key[0], ' ', end = '|')
