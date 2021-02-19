@@ -11,7 +11,6 @@ class Tableau:
         self.defaultValue = defaultValue
         self.data = []
         self.fillWithValue(self.defaultValue)
-        
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -32,11 +31,12 @@ class Tableau:
         return count
           
     
-    def affiche(self):
+    def affiche(self, content):
         for i in range(len(self.data)):
-            print(end = '|')
+            key = self.getFileFromIndex(i, content)
+            print( key[1], ' ', key[0], '    ', end = '|')
             for j in range(len(self.data[i])):
-                print(' ', self.data[i][j], end  = '  ')
+                print( self.data[i][j], end  = '  ')
             print('|')
                 
     def fillWithValue(self, newValue):
@@ -57,7 +57,6 @@ class Tableau:
             keys = self.getFileFromIndex(i,content)
             keys_File = keys[1]
             if list[i]== keys_File:
-                print(keys ,content[keys_File])
                 for j in  range(len(content[keys_File])):
                     for a in range(len(list)):
                         if content[keys_File][j] == list[a]:
@@ -81,4 +80,4 @@ if __name__== "__main__" :
     tableau = Tableau(len(x), len(x) )
     l = tableau.getFileFromIndex(2,x)
     tableau.getTableFromFile(x)
-    tableau.affiche()
+    tableau.affiche(x)
