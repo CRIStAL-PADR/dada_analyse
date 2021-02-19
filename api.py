@@ -34,9 +34,10 @@ class Tableau:
     
     def affiche(self):
         for i in range(len(self.data)):
+            print(end = '|')
             for j in range(len(self.data[i])):
-                print(self.data[i][j], end  =' ')
-            print()
+                print(' ', self.data[i][j], end  = '  ')
+            print('|')
                 
     def fillWithValue(self, newValue):
         self.data = [] 
@@ -52,34 +53,32 @@ class Tableau:
     def getTableFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         list = self.getList(content)
-        i = 0
-        while(i<len(content)):
-            j = 0
-            key = self.getFileFromIndex(i, content )
-            for x in list:
-                if list[i]== key:
-                    print(key , content[key])
-                    while(j < len(content[key])):
-                        if key== content[key][j]:
-                            self.data[i][j] = 1
-                        j = j+1        
-                key = 0
-            i+=1    
-    
+        for i in range(len(list)):
+            keys = self.getFileFromIndex(i,content)
+            keys_File = keys[1]
+            if list[i]== keys_File:
+                print(keys ,content[keys_File])
+                for j in  range(len(content[keys_File])):
+                    for a in range(len(list)):
+                        if content[keys_File][j] == list[a]:
+                            self.data[i][a] = 1
+            keys = 0
+            
+            
     def getFileFromIndex(self, index, content):
         i = 0
         keys = []
         list = self.getList(content)
-        while (i< len(list)):
+        for i in range( len(list)):
             keys.append(i)
-            i+=1
         if index == keys[index]:
-            return list[index]
+            return index,list[index]
+
             
 if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.getFileFromIndex(4,x)
+    l = tableau.getFileFromIndex(2,x)
     tableau.getTableFromFile(x)
     tableau.affiche()
