@@ -12,7 +12,6 @@ class Tableau:
         self.data = []
         self.fillWithValue(self.defaultValue)
         
-        
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -50,22 +49,30 @@ class Tableau:
     def getList(self, content):
        return [*content]
     
+    def getTableFromFile(self, content):
+        """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
+        list = self.getList(content)
+        i = 0
+        while(i<len(content)):
+            j = 0
+            key = self.getFileFromIndex(i, content )
+            for x in list:
+                if list[i]== key:
+                    print(key , content[key])
+                    while(j < len(content[key])):
+                        if key== content[key][j]:
+                            self.data[i][j] = 1
+                        j = j+1        
+                key = 0
+            i+=1    
+    
     def getFileFromIndex(self, index, content):
-        """
-        # savoir boucle sur les éléments d'un tableau
-        # savoir boucle sur le contenu du dictionnaire (clefs, et la valeurs)
-        # savoir convertir un clef d'un dictionnaire en un indice. 
-        # "file1.cpp" => 0
-        # "file2.h" => 6 
-        # faire une seconde fonction qui retourner l'indice et prend en paramètre le nom du fichier, ajouter d'autre paramètre si nécessaire (mais pas de variable globale) """
         i = 0
         keys = []
         list = self.getList(content)
         while (i< len(list)):
             keys.append(i)
-            print("a l'indice {} se trouve la clé {}".format(i, list[i]))
             i+=1
-        print(keys)
         if index == keys[index]:
             return list[index]
             
@@ -73,4 +80,6 @@ if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    print(tableau.getFileFromIndex(4,x))
+    tableau.getFileFromIndex(4,x)
+    tableau.getTableFromFile(x)
+    tableau.affiche()
