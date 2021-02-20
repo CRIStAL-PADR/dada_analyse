@@ -34,14 +34,18 @@ class Tableau:
     
     def affiche(self, content):
          liste = self.getList(content)
+        
+         for x in range(len(liste)+1):
+             print( ' ', x, end = ''+''), print(''+""+"", end = '')
+         print('  ')
          for x in range(len(liste)):
-             print('____' ,end = '')
+            print('____', end = '')
 
          for i in range(len(self.data)):
-            print('') 
+            print('  ') 
             c = self.compterLigne(i,1)
             key = self.getFileFromIndex(i,content)
-            print(key[0], ' ', end = '|')
+            print(''+'',key[0], ' ', end = '|')
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
             print('|', c)
@@ -64,7 +68,7 @@ class Tableau:
             keys = self.getFileFromIndex(i,content)
             keys_File = keys[1]
             if list[i]== keys_File:
-                print(keys ,content[keys_File])
+                #print(keys ,content[keys_File])
                 for j in  range(len(content[keys_File])):
                     for a in range(len(list)):
                         if content[keys_File][j] == list[a]:
