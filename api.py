@@ -33,24 +33,26 @@ class Tableau:
           
     
     def affiche(self, content):
-         liste = self.getList(content)
-        
-         for x in range(len(liste)+1):
+        """This function takes a generated file as a parameter and displays a dependency graph between the different
+        files as an adjacency matrix shape"""
+        liste = self.getList(content)
+        for x in range(len(liste)+1):
              print( ' ', x, end = ''+''), print(''+""+"", end = '')
-         print('  ')
-         for x in range(len(liste)):
+        print('  ')
+        for x in range(len(liste)):
             print('____', end = '')
 
-         for i in range(len(self.data)):
+        for i in range(len(self.data)):
             print('  ') 
             c = self.compterLigne(i,1)
             key = self.getFileFromIndex(i,content)
-            print(''+'',key[0], ' ', end = '|')
+            print('',key[0], ' ', end = '|')
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
             print('|', c)
                 
     def fillWithValue(self, newValue):
+        """ This function is used to fill the matrix with new value"""
         self.data = [] 
         for x in range(self.ligne):      
             sousTab = []                 
@@ -59,7 +61,8 @@ class Tableau:
             self.data.append(sousTab)     
     
     def getList(self, content):
-       return [*content]
+        """ This function returns the dictionaries keys of the content file as a list """
+        return [*content]
     
     def getTableFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -77,7 +80,8 @@ class Tableau:
             
             
     def getFileFromIndex(self, index, content):
-        i = 0
+        """ This function takes as parameter a file which is a dictionary and an index number then returns a
+        tuple which is the dictionary key and its index number"""
         keys = []
         list = self.getList(content)
         for i in range( len(list)):
