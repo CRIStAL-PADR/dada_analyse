@@ -36,21 +36,25 @@ class Tableau:
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape"""
         liste = self.getList(content)
+     
+        print(len(self.data))
         for x in range(len(liste)):
             print('_____', end = '')
-
         for i in range(len(self.data)):
             print('  ') 
             c = self.compterLigne(i,1)
             key = self.getFileFromIndex(i,content)
-            if len(key[1])<=7:
+            if len(key[1])<9:
                 print(key[1],'  ',key[0], ' ', end = '|')
-            if len(key[1])>7:
-                print(key[1],'',key[0], ' ', end = '|')
+            if len(key[1])>=9:
+                print(key[1], '',key[0], ' ', end = '|')
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
-            print('|', c)
-                
+            if c<=9:
+                print(' ','|', c)
+            if c>9 and c<99:
+                print(' ','|', c)
+
     def fillWithValue(self, newValue):
         """ This function is used to fill the matrix with new value"""
         self.data = [] 
