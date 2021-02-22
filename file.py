@@ -11,5 +11,5 @@ content={
     "file5.h"   :    ["file4.h", "file5.h","file1.h"],
     "file5.h"   :    ["file4.h", "file5.h","file1.h"],
     "file5.h"   :    ["file4.h", "file5.h","file1.h"],
-    "file5.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file5.h"   :    ["file4.h", "file5.h","file1.h"]
 }
