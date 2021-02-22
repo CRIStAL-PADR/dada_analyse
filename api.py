@@ -34,7 +34,23 @@ class Tableau:
     
     def affiche(self, content):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
-        files as an adjacency matrix shape"""
+        files as an adjacency matrix shape
+        
+                                     | 0 1 2 3 4 5 6 7
+        --------------------------------------------------- 
+        file1.cpp                  0 | 1 0 0 0 1 0 0 1 |  3 
+        file2.cpp                  1 | 0 1 0 0 1 0 0 0 |  2
+        file3.cpp                  2 | 0 0 1 0 1 0 0 0 |  2 
+        file2.h                    3 | 0 0 0 1 0 0 0 0 |  1 
+        file3.h                    4 | 0 0 0 0 1 0 0 0 |  1
+        /ceci/.../findfichier.h    5 | 0 0 0 0 0 1 0 0 |  1
+        file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
+        file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
+        
+        filename = "/ceci/est/un/très/long/nom/de/fichier.txt"
+        shortFilaneme = filename[:10]+"..."+filename[-10:]
+        
+        """
         liste = self.getList(content)
      
         print(len(self.data))
