@@ -6,5 +6,10 @@ content={
     "file2.h"   :    ["file2.h"],
     "file3.h"   :    ["file3.h"],
     "file4.h"   :    ["file4.h"],
-    "file5.h"   :    ["file4.h", "file5.h","file1.h"]
+    "monFichierAvecUnGrandNom.h"   :    ["file4.h", "file5.h","file1.h"],
+    "/home/damien/development/grand/grand/fichier/monFichierAvecUnGrandNom.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file5.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file5.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file5.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file5.h"   :    ["file4.h", "file5.h","file1.h"],
 }
