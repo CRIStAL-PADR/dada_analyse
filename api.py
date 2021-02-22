@@ -36,17 +36,17 @@ class Tableau:
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape"""
         liste = self.getList(content)
-        for x in range(len(liste)+1):
-             print( ' ', x, end = ''+''), print(''+""+"", end = '')
-        print('  ')
         for x in range(len(liste)):
-            print('____', end = '')
+            print('_____', end = '')
 
         for i in range(len(self.data)):
             print('  ') 
             c = self.compterLigne(i,1)
             key = self.getFileFromIndex(i,content)
-            print('',key[0], ' ', end = '|')
+            if len(key[1])<=7:
+                print(key[1],'  ',key[0], ' ', end = '|')
+            if len(key[1])>7:
+                print(key[1],'',key[0], ' ', end = '|')
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
             print('|', c)
