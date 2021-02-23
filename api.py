@@ -110,18 +110,42 @@ class Tableau:
     def getList(self, content):
         """ This function returns the dictionaries keys of the content file as a list """
         return [*content]
+
+    
+    def getDictFromFile(self,content):
+        """ this function returns a dictionary containing the files and their indexes """
+        dict = {}
+        keys = self.getList(content)
+        for i in range(len(keys)):
+            dict[keys[i]] = i
+        return dict
+    
+    def getTableFromFile2(self, content):
+        """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
+        #Complexité = O(i²) => dépend de la taille de content
+        liste = self.getList(content)
+        dictionnary = self.getDictFromFile(content)
+        for i in range(len(liste)):
+            keys_File = self.getFileFromIndex(i,content)[1]
+            if liste[i]== keys_File:
+                for j in  range(len(content[keys_File])):
+                    a = content[keys_File][j]
+                    b = dictionnary.get(a)
+                    print(a, '=>',b)
+                    self.data[i][dictionnary.get(content[keys_File][j])]=1
+            keys_File = 0
     
     def getTableFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(i²) => dépend de la taille de content
-        list = self.getList(content)
-        for i in range(len(list)):
+        liste = self.getList(content)
+        for i in range(len(liste)):
 
             keys_File = self.getFileFromIndex(i,content)[1]
-            if list[i]== keys_File:
+            if liste[i]== keys_File:
                 for j in  range(len(content[keys_File])):
-                    for a in range(len(list)):
-                        if content[keys_File][j] == list[a]:
+                    for a in range(len(liste)):
+                        if content[keys_File][j] == liste[a]:
                             self.data[i][a] = 1
             keys_File = 0
             
@@ -131,17 +155,16 @@ class Tableau:
         tuple which is the dictionary key and its index number"""
         #Complexité = O(len(content)) => dépend de la taille de content
         keys = []
-        list = self.getList(content)
-        for i in range( len(list)):
+        liste = self.getList(content)
+        for i in range( len(liste)):
             keys.append(i)
         if index == keys[index]:
-            return index,list[index]
+            return index,liste[index]
 
             
 if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    l = tableau.getFileFromIndex(2,x)
-    tableau.getTableFromFile(x)
+    tableau.getTableFromFile2(x)
     tableau.affiche(x)
