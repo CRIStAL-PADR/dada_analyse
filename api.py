@@ -1,5 +1,6 @@
 # -*-coding: utf-*-
 import file
+import timeit
 
 def load():
     return file.content
@@ -69,31 +70,32 @@ class Tableau:
         for i in range(len(self.data)):
             print('  ') 
             c = self.compterLigne(i,1)
-            key = self.indexToKey[i]
-            
-            if len(key[1])<9:
-                if key[0]<=9:
-                    print(key[1],'              ',key[0], '  ', end = '|')
-                if key[0] >9 and key[0] <=99:
-                    print(key[1],'              ',key[0], ' ', end = '|')  
-                if key[0] >99 :
-                    print(key[1],'              ',key[0], '',end = '|') 
+            keyA = self.indexToKey[i]
+            keyB = self.keyToIndex[keyA]
+           
+            if len(keyA)<9:
+                if keyB<=9:
+                    print(keyA,'              ',keyB, '  ', end = '|')
+                if keyB >9 and keyB <=99:
+                    print(keyA,'              ',keyB, ' ', end = '|')  
+                if keyB >99 :
+                    print(keyA,'              ',keyB, '',end = '|') 
                     
-            if len(key[1])==9:
-                if key[0]<=9:
-                    print(key[1], '            ',key[0], '  ', end = '|')
-                if key[0] >9 and key[0] <=99:
-                    print(key[1],'            ',key[0], ' ', end = '|') 
-                if key[0] >99 :
-                    print(key[1],'          ',key[0],'', end = '|') 
+            if len(keyA)==9:
+                if keyB<=9:
+                    print(keyA, '            ',keyB, '  ', end = '|')
+                if keyB >9 and keyB <=99:
+                    print(keyA,'            ',keyB, ' ', end = '|') 
+                if keyB>99 :
+                    print(keyA,'          ',keyB,'', end = '|') 
             
-            if len(key[1])>9:
-                if key[0]<=9:
-                    print(key[1][:3]+"..."+key[1][-5:], '          ',key[0], '  ', end = '|')
-                if key[0] >9 and key[0] <=99:
-                    print(key[1][:3]+"..."+key[1][-4:],'           ',key[0], ' ', end = '|') 
-                if key[0] >99 :
-                    print(key[1][:3]+"..."+key[1][-3:],'         ',key[0],'', end = '|') 
+            if len(keyA)>9:
+                if keyB<=9:
+                    print(keyA[:3]+"..."+keyA[-5:], '          ',keyB, '  ', end = '|')
+                if keyB >9 and keyB <=99:
+                    print(keyA[:3]+"..."+keyA[-4:],'           ',keyB, ' ', end = '|') 
+                if keyB >99 :
+                    print(keyA[:3]+"..."+keyA[-3:],'         ',keyB,'', end = '|') 
                     
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
@@ -122,12 +124,14 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    def loadDataFromFile2(self, content):
+    def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
         
-        self.indexToKey = list(content.keys())                      # O(n) 
+        self.indexToKey = list(content.keys())                      # O(n) 
+        print(self.indexToKey)
         self.keyToIndex = self.getDictFromFile(content)
+        print(self.keyToIndex)
         
         self.fillWithValue(0)
         for i in range(len(self.indexToKey)):
@@ -143,7 +147,7 @@ class Tableau:
         liste = self.getList(content)
         for i in range(len(liste)):
 
-            keys_File = self.getFileFromIndex(i,content)[1]
+            keys_File = self.indexToKey
             if liste[i]== keys_File:
                 for j in  range(len(content[keys_File])):
                     for a in range(len(liste)):
@@ -156,5 +160,7 @@ if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.loadDataFromFile2(x)
+    tableau.getTableFromFile(x)
+    tableau.loadDataFromFile(x)
     tableau.affiche(x)
+    print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
