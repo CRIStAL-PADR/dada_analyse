@@ -11,7 +11,9 @@ class Tableau:
         self.defaultValue = defaultValue
         self.data = []
         self.fillWithValue(self.defaultValue)
-        
+        self.indexToKey = []
+        self.keyToIndex = {}
+
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -67,7 +69,7 @@ class Tableau:
         for i in range(len(self.data)):
             print('  ') 
             c = self.compterLigne(i,1)
-            key = self.getFileFromIndex(i,content)
+            key = self.indexToKey[i]
             
             if len(key[1])<9:
                 if key[0]<=9:
@@ -115,25 +117,25 @@ class Tableau:
     def getDictFromFile(self,content):
         """ this function returns a dictionary containing the files and their indexes """
         dict = {}
-        keys = self.getList(content)
+        keys = list(content.keys())
         for i in range(len(keys)):
             dict[keys[i]] = i
         return dict
     
-    def getTableFromFile2(self, content):
+    def loadDataFromFile2(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
-        #Complexité = O(i²) => dépend de la taille de content
-        liste = self.getList(content)
-        dictionnary = self.getDictFromFile(content)
-        for i in range(len(liste)):
-            keys_File = self.getFileFromIndex(i,content)[1]
-            if liste[i]== keys_File:
-                for j in  range(len(content[keys_File])):
-                    a = content[keys_File][j]
-                    b = dictionnary.get(a)
-                    print(a, '=>',b)
-                    self.data[i][dictionnary.get(content[keys_File][j])]=1
-            keys_File = 0
+        #Complexité = O(n²) => dépend de la taille de content au carré
+        
+        self.indexToKey = list(content.keys())                      # O(n) 
+        self.keyToIndex = self.getDictFromFile(content)
+        
+        self.fillWithValue(0)
+        for i in range(len(self.indexToKey)):
+            keyI = self.indexToKey[i]            
+            for keyJ in content[keyI]:
+                j = self.keyToIndex[keyJ] 
+                self.data[i][j] = 1
+                
     
     def getTableFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -150,21 +152,9 @@ class Tableau:
             keys_File = 0
             
             
-    def getFileFromIndex(self, index, content):
-        """ This function takes as parameter a file which is a dictionary and an index number then returns a
-        tuple which is the dictionary key and its index number"""
-        #Complexité = O(len(content)) => dépend de la taille de content
-        keys = []
-        liste = self.getList(content)
-        for i in range( len(liste)):
-            keys.append(i)
-        if index == keys[index]:
-            return index,liste[index]
-
-            
 if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.getTableFromFile2(x)
+    tableau.loadDataFromFile2(x)
     tableau.affiche(x)
