@@ -58,7 +58,7 @@ class Tableau:
         liste = self.getList(content)
         for x in range(len(liste)):
             if x == 0:
-                print('                           ',x, end = ' ')
+                print('                              ',x, end = ' ')
             if x<=9 and x>0:
                 print('',x, '', end = '')
             if x >9 :
@@ -75,27 +75,27 @@ class Tableau:
            
             if len(keyA)<9:
                 if keyB<=9:
-                    print(keyA,'              ',keyB, '  ', end = '|')
+                    print(keyA,'                 ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA,'              ',keyB, ' ', end = '|')  
+                    print(keyA,'                 ',keyB, ' ', end = '|')  
                 if keyB >99 :
-                    print(keyA,'              ',keyB, '',end = '|') 
+                    print(keyA,'                 ',keyB, '',end = '|') 
                     
             if len(keyA)==9:
                 if keyB<=9:
-                    print(keyA, '            ',keyB, '  ', end = '|')
+                    print(keyA, '               ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA,'            ',keyB, ' ', end = '|') 
+                    print(keyA,'               ',keyB, ' ', end = '|') 
                 if keyB>99 :
-                    print(keyA,'          ',keyB,'', end = '|') 
+                    print(keyA,'             ',keyB,'', end = '|') 
             
             if len(keyA)>9:
                 if keyB<=9:
-                    print(keyA[:3]+"..."+keyA[-5:], '          ',keyB, '  ', end = '|')
+                    print(keyA[:3]+"..."+keyA[-5:], '             ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA[:3]+"..."+keyA[-4:],'           ',keyB, ' ', end = '|') 
+                    print(keyA[:3]+"..."+keyA[-4:],'              ',keyB, ' ', end = '|') 
                 if keyB >99 :
-                    print(keyA[:3]+"..."+keyA[-3:],'         ',keyB,'', end = '|') 
+                    print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|') 
                     
             for j in range(len(self.data[i])):
                 print(self.data[i][j], end  = '  ')
@@ -124,22 +124,30 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
+    def loadPathFromData(self,content):
+        self.loadDataFromFile(content)
+        for i in range(len(self.data)):
+            for j in range(len(self.data[i])):
+                if self.data[i][j]==1:
+                    a=j
+                if self.data[a][j]==1 :
+                    self.data[i][j] = 2
+                            
+                            
+
+    
     def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
         
         self.indexToKey = list(content.keys())                      # O(n) 
-        print(self.indexToKey)
         self.keyToIndex = self.getDictFromFile(content)
-        print(self.keyToIndex)
-        
         self.fillWithValue(0)
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]            
             for keyJ in content[keyI]:
                 j = self.keyToIndex[keyJ] 
                 self.data[i][j] = 1
-                
     
     def getTableFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -152,7 +160,7 @@ class Tableau:
                 for j in  range(len(content[keys_File])):
                     for a in range(len(liste)):
                         if content[keys_File][j] == liste[a]:
-                            self.data[i][a] = 1
+                            self.data[i][a] = 2
             keys_File = 0
             
             
@@ -160,7 +168,9 @@ if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.getTableFromFile(x)
     tableau.loadDataFromFile(x)
     tableau.affiche(x)
-    print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
+    print('')
+    tableau.loadPathFromData(x)
+    tableau.affiche(x)
+    #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
