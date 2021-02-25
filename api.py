@@ -1,7 +1,6 @@
 # -*-coding: utf-*-
 import file
 import timeit
-
 def load():
     return file.content
 
@@ -14,6 +13,7 @@ class Tableau:
         self.fillWithValue(self.defaultValue)
         self.indexToKey = []
         self.keyToIndex = {}
+        self.newdata = []
 
                 
     def compteColone(self, c, value):
@@ -105,11 +105,13 @@ class Tableau:
     def fillWithValue(self, newValue):
         """ This function is used to fill the matrix with new value"""
         self.data = [] 
+        self.newdata = []
         for x in range(self.ligne):      
             sousTab = []                 
             for y in range(self.colonne): 
                 sousTab.append(newValue)                                            
-            self.data.append(sousTab)     
+            self.data.append(sousTab)
+            self.newdata.append(sousTab)
     
     def getList(self, content):
         """ This function returns the dictionaries keys of the content file as a list """
@@ -125,15 +127,19 @@ class Tableau:
         return dict
     
     def loadPathFromData(self,content):
-        self.loadDataFromFile(content)
-        for i in range(len(self.data)):
-            for j in range(len(self.data[i])):
-                if self.data[i][j]==1:
-                    a=j
-                    for m in range(len(self.data[a])): 
-                        if self.data[a][m]==1:
-                            self.data[i][m]=2 
-                            
+        v = len(content)
+        self.newdata = list(map(lambda i: list(map(lambda j: j, i)), self.data))
+        for k in range(v):
+            for i in range(v):
+                for j in range(v):
+                    self.newdata[i][j] = min(self.newdata[i][j],
+                                 self.newdata[i][k] + self.newdata[k][j]
+                                 )
+        for i in range(len(self.newdata)):
+            for j in range(len(self.newdata[i])):
+                print(self.newdata[i][j], end = '  ')
+            print('  ')
+                   
                        
 
     
@@ -173,5 +179,5 @@ if __name__== "__main__" :
     tableau.affiche(x)
     print('')
     tableau.loadPathFromData(x)
-    tableau.affiche(x)
+    #tableau.affiche(x)
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
