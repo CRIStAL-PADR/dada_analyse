@@ -129,25 +129,25 @@ class Tableau:
     def loadPathFromData(self,content):
         v = len(content)
         self.newdata = list(map(lambda i: list(map(lambda j: j, i)), self.data))
+        for i in range(v):
+            self.newdata[i][i] = 0
         for k in range(v):
             for i in range(v):
                 for j in range(v):
-                    self.newdata[i][j] = min(self.newdata[i][j],
-                                 self.newdata[i][k] + self.newdata[k][j]
-                                 )
+                    if self.newdata[i][j] > self.newdata[i][k] + self.newdata[k][j]:
+                        #print('i = ',i,'j = ',' ',j, ' ', self.newdata[i][j],  self.newdata[i][k], self.newdata[k][j],)
+                        self.newdata[i][j] =  self.newdata[i][k] + self.newdata[k][j]
+                        #print(self.newdata[i][k], self.newdata[k][j] )         
         for i in range(len(self.newdata)):
             for j in range(len(self.newdata[i])):
                 print(self.newdata[i][j], end = '  ')
             print('  ')
-                   
-                       
+        
 
-    
     def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
-        
-        self.indexToKey = list(content.keys())                      # O(n) 
+        self.indexToKey = list(content.keys())                       
         self.keyToIndex = self.getDictFromFile(content)
         self.fillWithValue(0)
         for i in range(len(self.indexToKey)):
