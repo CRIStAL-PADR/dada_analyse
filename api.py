@@ -1,6 +1,5 @@
 # -*-coding: utf-*-
 import file
-import timeit
 def load():
     return file.content
 
@@ -50,8 +49,7 @@ class Tableau:
         file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
         """
         array = self.getPath()
-        print('1= ', array)
-        liste = self.getList(self.content)
+        liste = self.getList()
         for x in range(len(liste)):
             if x == 0:
                 print('                              ',x, end = ' ')
@@ -66,6 +64,7 @@ class Tableau:
         for i in range(len(self.content)):
             print('  ') 
             c = self.compterLigne(i,1)
+            print('i = ',i)
             keyA = self.indexToKey[i]
             keyB = self.keyToIndex[keyA]
            
@@ -95,11 +94,11 @@ class Tableau:
                     
             for j in range(len(self.data[i])):
                 if n ==0:
-                    if self.data[i][j] ==9:
+                    if self.data[i][j] ==999999:
                         self.data[i][j] = 0
                     print(self.data[i][j], end  = '  ')
                 if n==1:
-                    if array[i][j] ==9:
+                    if array[i][j] ==999999:
                         array[i][j] = 'r'
                     print(array[i][j], end  = '  ')
             if n ==0:
@@ -119,15 +118,15 @@ class Tableau:
             self.data.append(sousTab)
             self.newdata.append(sousTab)
     
-    def getList(self, content):
+    def getList(self):
         """ This function returns the dictionaries keys of the content file as a list """
-        return [*content]
+        return [*self.content]
 
     
-    def getDictFromFile(self,content):
+    def getDictFromFile(self):
         """ this function returns a dictionary containing the files and their indexes """
         dict = {}
-        keys = list(content.keys())
+        keys = list(self.content.keys())
         for i in range(len(keys)):
             dict[keys[i]] = i
         return dict
@@ -157,8 +156,8 @@ class Tableau:
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
         self.indexToKey = list(self.content.keys())                       
-        self.keyToIndex = self.getDictFromFile(self.content)
-        self.fillWithValue(9)
+        self.keyToIndex = self.getDictFromFile()
+        self.fillWithValue(999999)
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]            
             for keyJ in self.content[keyI]:
@@ -183,11 +182,20 @@ class Tableau:
 if __name__== "__main__" :
     x = load()
     
-    tableau = Tableau(len(x), len(x) )
+    tableau1 = Tableau(len(x), len(x) ) 
     tableau2 = Tableau(len(x), len(x) )
-    tableau.loadDataFromFile()
-    tableau.affiche(1) # pour afficher la nouvelle matrice avec les chemins
+    tableau3 = Tableau(len(x), len(x))
+    
+    tableau2.loadDataFromFile()
+    tableau1.loadDataFromFile()  # rempli le tableau avec des 1 quand il y a un lien entre 2 fichiers
+    tableau3.loadDataFromFile()
+    
+    tableau2.affiche() # affiche un tableau qui indique le lien entre 2 fichiers avec des 1
     print('')
-    tableau.affiche()
-    #tableau.affiche(x)
+    tableau1.affiche(1) # affiche le tableau rempli par les chemins les plus court
+    print('    ')
+    tableau3.getPath()
+    #print(tableau3.data)
+    print(tableau3.indexToKey)
+    tableau3.affiche()
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
