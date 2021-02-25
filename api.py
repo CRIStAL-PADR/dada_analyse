@@ -130,10 +130,11 @@ class Tableau:
             for j in range(len(self.data[i])):
                 if self.data[i][j]==1:
                     a=j
-                if self.data[a][j]==1 :
-                    self.data[i][j] = 2
+                    for m in range(len(self.data[a])): 
+                        if self.data[a][m]==1:
+                            self.data[i][m]=2 
                             
-                            
+                       
 
     
     def loadDataFromFile(self, content):
