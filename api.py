@@ -13,7 +13,6 @@ class Tableau:
         self.fillWithValue(self.defaultValue)
         self.indexToKey = []
         self.keyToIndex = {}
-        self.newdata = []
         self.content = load()
                 
     def compteColone(self, c, value):
@@ -35,7 +34,7 @@ class Tableau:
         return count
           
     
-    def affiche(self):
+    def affiche(self,n=0):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape
         
@@ -49,12 +48,9 @@ class Tableau:
         /ceci/.../findfichier.h    5 | 0 0 0 0 0 1 0 0 |  1
         file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
         file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
-        
-        filename = "/ceci/est/un/très/long/nom/de/fichier.txt"
-        shortFilaneme = filename[:10]+"..."+filename[-10:]
-        
         """
-        
+        array = self.getPath()
+        print('1= ', array)
         liste = self.getList(self.content)
         for x in range(len(liste)):
             if x == 0:
@@ -67,7 +63,7 @@ class Tableau:
        
         for x in range(len(liste)):
             print('------', end = '')
-        for i in range(len(self.data)):
+        for i in range(len(self.content)):
             print('  ') 
             c = self.compterLigne(i,1)
             keyA = self.indexToKey[i]
@@ -98,8 +94,18 @@ class Tableau:
                     print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|') 
                     
             for j in range(len(self.data[i])):
-                print(self.data[i][j], end  = '  ')
-            print(' ','|', c)
+                if n ==0:
+                    if self.data[i][j] ==9:
+                        self.data[i][j] = 0
+                    print(self.data[i][j], end  = '  ')
+                if n==1:
+                    if array[i][j] ==9:
+                        array[i][j] = 'r'
+                    print(array[i][j], end  = '  ')
+            if n ==0:
+                print(' ','|', c)
+            if n ==1:
+                print(' ','|')
 
 
     def fillWithValue(self, newValue):
@@ -128,22 +134,24 @@ class Tableau:
     
     def getPath(self):
         v = len(self.content)
-        self.newdata = list(map(lambda i: list(map(lambda j: j, i)), self.data))
+        array = []
+        array = list(map(lambda i: list(map(lambda j: j, i)), self.data))
         for i in range(v):
-            self.newdata[i][i] = 0
+            array[i][i] = 0
         for k in range(v):
             for i in range(v):
                 for j in range(v):
-                    if self.newdata[i][j] > self.newdata[i][k] + self.newdata[k][j]:
-                        self.newdata[i][j] =  self.newdata[i][k] + self.newdata[k][j]
-       
-        for i in range(len(self.newdata)):
+                    if array[i][j] > array[i][k] + array[k][j]:
+                        array[i][j] =  array[i][k] + array[k][j]
+        return array
+    
+        """for i in range(len(self.newdata)):
             for j in range(len(self.newdata[i])):
                 if self.newdata[i][j]==9:
                     self.newdata[i][j]= 'r'
                 print(self.newdata[i][j], end = '  ')
             print('  ')
-        
+        """
 
     def loadDataFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -176,10 +184,10 @@ if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
+    tableau2 = Tableau(len(x), len(x) )
     tableau.loadDataFromFile()
-    tableau.affiche()
+    tableau.affiche(1) # pour afficher la nouvelle matrice avec les chemins
     print('')
-    tableau2 = tableau.getPath()
-    
+    tableau.affiche()
     #tableau.affiche(x)
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
