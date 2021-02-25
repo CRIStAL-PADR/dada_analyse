@@ -64,7 +64,6 @@ class Tableau:
         for i in range(len(self.content)):
             print('  ') 
             c = self.compterLigne(i,1)
-            print('i = ',i)
             keyA = self.indexToKey[i]
             keyB = self.keyToIndex[keyA]
            
@@ -194,8 +193,6 @@ if __name__== "__main__" :
     print('')
     tableau1.affiche(1) # affiche le tableau rempli par les chemins les plus court
     print('    ')
-    tableau3.getPath()
-    #print(tableau3.data)
-    print(tableau3.indexToKey)
+
     tableau3.affiche()
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
