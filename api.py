@@ -14,7 +14,7 @@ class Tableau:
         self.indexToKey = []
         self.keyToIndex = {}
         self.newdata = []
-
+        self.content = load()
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -35,7 +35,7 @@ class Tableau:
         return count
           
     
-    def affiche(self, content):
+    def affiche(self):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape
         
@@ -55,7 +55,7 @@ class Tableau:
         
         """
         
-        liste = self.getList(content)
+        liste = self.getList(self.content)
         for x in range(len(liste)):
             if x == 0:
                 print('                              ',x, end = ' ')
@@ -126,8 +126,8 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    def loadPathFromData(self,content):
-        v = len(content)
+    def getPath(self):
+        v = len(self.content)
         self.newdata = list(map(lambda i: list(map(lambda j: j, i)), self.data))
         for i in range(v):
             self.newdata[i][i] = 0
@@ -135,38 +135,39 @@ class Tableau:
             for i in range(v):
                 for j in range(v):
                     if self.newdata[i][j] > self.newdata[i][k] + self.newdata[k][j]:
-                        #print('i = ',i,'j = ',' ',j, ' ', self.newdata[i][j],  self.newdata[i][k], self.newdata[k][j],)
                         self.newdata[i][j] =  self.newdata[i][k] + self.newdata[k][j]
-                        #print(self.newdata[i][k], self.newdata[k][j] )         
+       
         for i in range(len(self.newdata)):
             for j in range(len(self.newdata[i])):
+                if self.newdata[i][j]==9:
+                    self.newdata[i][j]= 'r'
                 print(self.newdata[i][j], end = '  ')
             print('  ')
         
 
-    def loadDataFromFile(self, content):
+    def loadDataFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
-        self.indexToKey = list(content.keys())                       
-        self.keyToIndex = self.getDictFromFile(content)
-        self.fillWithValue(0)
+        self.indexToKey = list(self.content.keys())                       
+        self.keyToIndex = self.getDictFromFile(self.content)
+        self.fillWithValue(9)
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]            
-            for keyJ in content[keyI]:
+            for keyJ in self.content[keyI]:
                 j = self.keyToIndex[keyJ] 
                 self.data[i][j] = 1
     
-    def getTableFromFile(self, content):
+    def getTableFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(i²) => dépend de la taille de content
-        liste = self.getList(content)
+        liste = self.getList(self.content)
         for i in range(len(liste)):
 
             keys_File = self.indexToKey
             if liste[i]== keys_File:
-                for j in  range(len(content[keys_File])):
+                for j in  range(len(self.content[keys_File])):
                     for a in range(len(liste)):
-                        if content[keys_File][j] == liste[a]:
+                        if self.content[keys_File][j] == liste[a]:
                             self.data[i][a] = 2
             keys_File = 0
             
@@ -175,9 +176,10 @@ if __name__== "__main__" :
     x = load()
     
     tableau = Tableau(len(x), len(x) )
-    tableau.loadDataFromFile(x)
-    tableau.affiche(x)
+    tableau.loadDataFromFile()
+    tableau.affiche()
     print('')
-    tableau.loadPathFromData(x)
+    tableau2 = tableau.getPath()
+    
     #tableau.affiche(x)
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
