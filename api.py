@@ -4,7 +4,7 @@ def load():
     return file.content
 
 class Tableau:
-    def __init__(self, ligne, colonne, defaultValue = 0):
+    def __init__(self, ligne, colonne, defaultValue = None):
         self.ligne = ligne
         self.colonne = colonne
         self.defaultValue = defaultValue
@@ -13,6 +13,7 @@ class Tableau:
         self.indexToKey = []
         self.keyToIndex = {}
         self.content = load()
+        self.size = [ligne, colonne]
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -33,7 +34,7 @@ class Tableau:
         return count
           
     
-    def affiche(self,n=0):
+    def affiche(self):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape
         
@@ -48,7 +49,7 @@ class Tableau:
         file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
         file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
         """
-        array = self.getPath()
+       
         liste = self.getList()
         for x in range(len(liste)):
             if x == 0:
@@ -92,30 +93,25 @@ class Tableau:
                     print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|') 
                     
             for j in range(len(self.data[i])):
-                if n ==0:
-                    if self.data[i][j] ==999999:
-                        self.data[i][j] = 0
-                    print(self.data[i][j], end  = '  ')
-                if n==1:
-                    if array[i][j] ==999999:
-                        array[i][j] = 'r'
-                    print(array[i][j], end  = '  ')
-            if n ==0:
-                print(' ','|', c)
-            if n ==1:
-                print(' ','|')
+                
+                if self.data[i][j] ==None:
+                    print('-', end  = '  ')
+                else:
+                    print(self.data[i][j], end = '  ')
+                
+            print(' ','|', c)
+
 
 
     def fillWithValue(self, newValue):
         """ This function is used to fill the matrix with new value"""
         self.data = [] 
-        self.newdata = []
         for x in range(self.ligne):      
             sousTab = []                 
             for y in range(self.colonne): 
                 sousTab.append(newValue)                                            
             self.data.append(sousTab)
-            self.newdata.append(sousTab)
+          
     
     def getList(self):
         """ This function returns the dictionaries keys of the content file as a list """
@@ -130,33 +126,46 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    def getPath(self):
-        v = len(self.content)
-        array = []
-        array = list(map(lambda i: list(map(lambda j: j, i)), self.data))
+    def getPath(self, tableau=None):
+        if tableau == None:
+            tableau = Tableau(self.size[0],self.size[1])
+        elif tableau.size != self.size:
+            raise runtime_error()    
+            
+        tableau.indexToKey = self.indexToKey.copy()
+        tableau.keyToIndex = self.keyToIndex.copy()
+        
+        array =  tableau.data
+        v = len(array)
         for i in range(v):
-            array[i][i] = 0
+            for j in range(v):
+                if i ==j:
+                    array[i][i] = 0
+                elif self.data[i][j]==1:
+                    array[i][j] = 1
+                else:
+                    array[i][j]=9999999
         for k in range(v):
             for i in range(v):
                 for j in range(v):
                     if array[i][j] > array[i][k] + array[k][j]:
                         array[i][j] =  array[i][k] + array[k][j]
-        return array
+        for i in range(v):
+            for j in range(v):
+                if array[i][j] ==  9999999:
+                    array[i][j]= None
+        return tableau
     
-        """for i in range(len(self.newdata)):
-            for j in range(len(self.newdata[i])):
-                if self.newdata[i][j]==9:
-                    self.newdata[i][j]= 'r'
-                print(self.newdata[i][j], end = '  ')
-            print('  ')
-        """
+        
 
     def loadDataFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
         self.indexToKey = list(self.content.keys())                       
         self.keyToIndex = self.getDictFromFile()
-        self.fillWithValue(999999)
+        
+        self.fillWithValue(0)
+        
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]            
             for keyJ in self.content[keyI]:
@@ -182,17 +191,19 @@ if __name__== "__main__" :
     x = load()
     
     tableau1 = Tableau(len(x), len(x) ) 
-    tableau2 = Tableau(len(x), len(x) )
-    tableau3 = Tableau(len(x), len(x))
+    tableau1.loadDataFromFile()
     
-    tableau2.loadDataFromFile()
-    tableau1.loadDataFromFile()  # rempli le tableau avec des 1 quand il y a un lien entre 2 fichiers
-    tableau3.loadDataFromFile()
+    tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
+    #tableau3 = tableau2.getPath()
     
+    tableau1.affiche()
+    tableau2.affiche()
+    
+    """
+    tableau2 = tableau1.getPath()
     tableau2.affiche() # affiche un tableau qui indique le lien entre 2 fichiers avec des 1
     print('')
     tableau1.affiche(1) # affiche le tableau rempli par les chemins les plus court
-    print('    ')
+    print('    ')"""
 
-    tableau3.affiche()
     #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
