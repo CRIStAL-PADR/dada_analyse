@@ -25,11 +25,11 @@ class Tableau:
                     break
         return count
     
-    def compterLigne(self, l, value):
+    def compterLigne(self, l, value = None):
         """retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
         count = 0
         for j in range(len(self.data[l])):
-            if (self.data[l][j]==value):
+            if (self.data[l][j]!=value and self.data[l][j]!=0):
                 count = count+1        
         return count
           
@@ -64,7 +64,7 @@ class Tableau:
             print('------', end = '')
         for i in range(len(self.content)):
             print('  ') 
-            c = self.compterLigne(i,1)
+            c = self.compterLigne(i)
             keyA = self.indexToKey[i]
             keyB = self.keyToIndex[keyA]
            
