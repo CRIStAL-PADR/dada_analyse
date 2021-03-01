@@ -1,8 +1,50 @@
 # -*-coding: utf-*-
+
 import file
+
+def PrintTable(tableau):
+    liste = tableau.getList()
+    print ("""
+<html>
+    <table width="70%" border = " 5" align="center">
+        <tr>
+""")
+    for x in range(len(liste)):
+        if x ==0:
+            print('<td>&nbsp;</td> ')
+            print('<td>&nbsp;</td> ')
+            print( '<td>{}</td> '.format(x), end = ' ')
+        if x <=9 and x>0:
+            print('<td>{}</td> '.format(x), end = ' ')
+        if x >=10:
+            print( '<td>{}</td> '.format(x) , end = ' ')
+    print("""
+          </tr>
+          """)
+    for i in range(len(tableau.data)):
+        c = tableau.compterLigne(i)
+        keyA = tableau.indexToKey[i]
+        keyB = tableau.keyToIndex[keyA]
+        print(""" <tr> """)
+        print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(keyB))
+        for j in range(len(tableau.data[i])):
+            if tableau.data[i][j] ==None:
+                print('<td>-</td>', end  = ' ')
+            else:
+                print('<td>{}</td>'.format( tableau.data[i][j]) , end  = ' ')
+        print('<td>{}</td>'.format(c))
+    print(""" <tr> """)
+print("""
+    </table>
+</h
+""")
+    
+
 def load():
     return file.content
 
+
+    
 class Tableau:
     def __init__(self, ligne, colonne, defaultValue = None):
         self.ligne = ligne
@@ -196,9 +238,10 @@ if __name__== "__main__" :
     tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
     #tableau3 = tableau2.getPath()
     
-    tableau1.affiche()
-    tableau2.affiche()
-    
+    #tableau1.affiche()
+    #tableau2.affiche()
+    PrintTable(tableau2)
+    PrintTable(tableau1)
     """
     tableau2 = tableau1.getPath()
     tableau2.affiche() # affiche un tableau qui indique le lien entre 2 fichiers avec des 1
