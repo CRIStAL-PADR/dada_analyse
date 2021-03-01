@@ -9,5 +9,7 @@ content={
     "monFichierAvecUnGrandNom.h"   :    ["file4.h", "file5.h","file1.h"],
     "/home/damien/development/grand/fichier/monFichierAvecUnGrandNom.h"   :    ["file4.h", "file5.h","file1.h","file1.cpp"],
     "file5.h"   :    ["file4.h", "file5.h","file1.h"],
+    "file6.h"   :    ["file4.h", "file5.h","file1.h",  "file1.cpp","file8.cpp" ],
+    "file7.h"   :    [],
     "file8.cpp"   :    ["file4.h", "file5.h","file1.h"]
    }
