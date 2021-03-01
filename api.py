@@ -242,11 +242,4 @@ if __name__== "__main__" :
     #tableau2.affiche()
     PrintTable(tableau2)
     PrintTable(tableau1)
-    """
-    tableau2 = tableau1.getPath()
-    tableau2.affiche() # affiche un tableau qui indique le lien entre 2 fichiers avec des 1
-    print('')
-    tableau1.affiche(1) # affiche le tableau rempli par les chemins les plus court
-    print('    ')"""
-
-    #print(timeit.timeit('[func(x) for func in (tableau.getTableFromFile(x),tableau.loadDataFromFile(x))]', globals=globals()))
+  
