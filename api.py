@@ -172,7 +172,7 @@ class Tableau:
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
-            raise runtime_error()    
+            raise RuntimeError()    
             
         tableau.indexToKey = self.indexToKey.copy()
         tableau.keyToIndex = self.keyToIndex.copy()
