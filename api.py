@@ -1,50 +1,10 @@
 # -*-coding: utf-*-
-
 import file
-
-def PrintTable(tableau):
-    liste = tableau.getList()
-    print ("""
-<html>
-    <table width="70%" border = " 5" align="center">
-        <tr>
-""")
-    for x in range(len(liste)):
-        if x ==0:
-            print('<td>&nbsp;</td> ')
-            print('<td>&nbsp;</td> ')
-            print( '<td>{}</td> '.format(x), end = ' ')
-        if x <=9 and x>0:
-            print('<td>{}</td> '.format(x), end = ' ')
-        if x >=10:
-            print( '<td>{}</td> '.format(x) , end = ' ')
-    print("""
-          </tr>
-          """)
-    for i in range(len(tableau.data)):
-        c = tableau.compterLigne(i)
-        keyA = tableau.indexToKey[i]
-        keyB = tableau.keyToIndex[keyA]
-        print(""" <tr> """)
-        print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(keyB))
-        for j in range(len(tableau.data[i])):
-            if tableau.data[i][j] ==None:
-                print('<td>-</td>', end  = ' ')
-            else:
-                print('<td>{}</td>'.format( tableau.data[i][j]) , end  = ' ')
-        print('<td>{}</td>'.format(c))
-    print(""" <tr> """)
-print("""
-    </table>
-</h
-""")
-    
+import displayMatrix
 
 def load():
     return file.content
-
-
-    
+   
 class Tableau:
     def __init__(self, ligne, colonne, defaultValue = None):
         self.ligne = ligne
@@ -74,8 +34,7 @@ class Tableau:
             if (self.data[l][j]!=value and self.data[l][j]!=0):
                 count = count+1        
         return count
-          
-    
+              
     def affiche(self):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape
@@ -91,7 +50,6 @@ class Tableau:
         file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
         file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
         """
-       
         liste = self.getList()
         for x in range(len(liste)):
             if x == 0:
@@ -143,8 +101,6 @@ class Tableau:
                 
             print(' ','|', c)
 
-
-
     def fillWithValue(self, newValue):
         """ This function is used to fill the matrix with new value"""
         self.data = [] 
@@ -153,8 +109,7 @@ class Tableau:
             for y in range(self.colonne): 
                 sousTab.append(newValue)                                            
             self.data.append(sousTab)
-          
-    
+             
     def getList(self):
         """ This function returns the dictionaries keys of the content file as a list """
         return [*self.content]
@@ -238,8 +193,9 @@ if __name__== "__main__" :
     tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
     #tableau3 = tableau2.getPath()
     
-    #tableau1.affiche()
+    tableau1.affiche()
+    print(' ')
     #tableau2.affiche()
-    PrintTable(tableau2)
-    PrintTable(tableau1)
+    displayMatrix.PrintInHtmlFormat(tableau2)
+    #displayMatrix.PrintInHtmlFormat(tableau1)
   
