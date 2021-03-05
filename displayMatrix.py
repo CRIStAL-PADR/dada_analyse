@@ -2,14 +2,15 @@ def PrintInHtmlFormat(tableau):
     liste = tableau.getList()
     print ("""
 <html>
-    <table width="70%" border = " 5" align="center">
+    <table width="70%" border = " 5" align="center" >
+    <link ref = "stylesheet" href = "style.css">
         <tr>
 """)
     for x in range(len(liste)):
         if x ==0:
-            print('<td>&nbsp;</td> ')
-            print('<td>&nbsp;</td> ')
-            print( '<td>{}</td> '.format(x), end = ' ')
+            print('<td>&nbsp;</td>')
+            print('<td>&nbsp;</td>')
+            print( '<td class = "td">{}</td> '.format(x), end = ' ')
         if x <=9 and x>0:
             print('<td>{}</td> '.format(x), end = ' ')
         if x >=10:
