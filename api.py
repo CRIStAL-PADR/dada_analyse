@@ -1,9 +1,21 @@
 # -*-coding: utf-*-
-import file
+import include_graph as file
 import displayMatrix
+import file as x
+
 
 def load():
-    return file.content
+    i = 'sources'
+    dictionary = {}
+    file.content
+    for  key in file.content.keys():
+        for j in file.content[key].keys():
+            if j == i:
+                for a in file.content[key][j]:
+                    dictionary.update({key : a})
+    print(dictionary)
+            
+    return dictionary
    
 class Tableau:
     def __init__(self, ligne, colonne, defaultValue = None):
@@ -158,15 +170,17 @@ class Tableau:
     def loadDataFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
-        self.indexToKey = list(self.content.keys())                       
+        self.indexToKey = list(self.content.keys()) 
+                     
         self.keyToIndex = self.getDictFromFile()
         
         self.fillWithValue(0)
         
         for i in range(len(self.indexToKey)):
-            keyI = self.indexToKey[i]            
+            keyI = self.indexToKey[i]  
             for keyJ in self.content[keyI]:
-                j = self.keyToIndex[keyJ] 
+                print('##### = ', keyJ)
+                j = self.keyToIndex["/home/dmarchal/projects/DEFROST/dev/sofa3/build/include/SofaMiscCollision/config.h"] 
                 self.data[i][j] = 1
     
     def getTableFromFile(self):
@@ -198,4 +212,3 @@ if __name__== "__main__" :
     #tableau2.affiche()
     displayMatrix.PrintInHtmlFormat(tableau2)
     #displayMatrix.PrintInHtmlFormat(tableau1)
-  
