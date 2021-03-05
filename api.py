@@ -1,8 +1,6 @@
 # -*-coding: utf-*-
 import include_graph as file
 import displayMatrix
-import file as x
-
 
 def load():
     i = 'sources'
@@ -12,7 +10,7 @@ def load():
         for j in file.content[key].keys():
             if j == i:
                 for a in file.content[key][j]:
-                    dictionary.update({key : a})
+                    dictionary.update({key : [a]})
     print(dictionary)
             
     return dictionary
@@ -180,7 +178,7 @@ class Tableau:
             keyI = self.indexToKey[i]  
             for keyJ in self.content[keyI]:
                 print('##### = ', keyJ)
-                j = self.keyToIndex["/home/dmarchal/projects/DEFROST/dev/sofa3/build/include/SofaMiscCollision/config.h"] 
+                j = self.keyToIndex[keyJ] 
                 self.data[i][j] = 1
     
     def getTableFromFile(self):
