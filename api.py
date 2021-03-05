@@ -6,14 +6,17 @@ def load():
     i = 'sources'
     dictionary = {}
     file.content
+    liste  = []
     for  key in file.content.keys():
         for j in file.content[key].keys():
             if j == i:
                 for a in file.content[key][j]:
-                    dictionary.update({key : [a]})
-    print(dictionary)
+                    liste.append(a)  
+                dictionary[key] = liste
+                liste = []
             
     return dictionary
+
    
 class Tableau:
     def __init__(self, ligne, colonne, defaultValue = None):
@@ -133,7 +136,7 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    def getPath(self, tableau=None):
+    """def getPath(self, tableau=None):
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
@@ -161,7 +164,7 @@ class Tableau:
             for j in range(v):
                 if array[i][j] ==  9999999:
                     array[i][j]= None
-        return tableau
+        return tableau"""
     
         
 
@@ -177,9 +180,9 @@ class Tableau:
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]  
             for keyJ in self.content[keyI]:
-                print('##### = ', keyJ)
-                j = self.keyToIndex[keyJ] 
-                self.data[i][j] = 1
+                if keyJ ==keyI:
+                    j = self.keyToIndex[keyJ] 
+                    self.data[i][j] = 1
     
     def getTableFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -202,11 +205,11 @@ if __name__== "__main__" :
     tableau1 = Tableau(len(x), len(x) ) 
     tableau1.loadDataFromFile()
     
-    tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
+    #tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
     #tableau3 = tableau2.getPath()
     
     tableau1.affiche()
     print(' ')
     #tableau2.affiche()
-    displayMatrix.PrintInHtmlFormat(tableau2)
-    #displayMatrix.PrintInHtmlFormat(tableau1)
+    #displayMatrix.PrintInHtmlFormat(tableau2)
+    displayMatrix.PrintInHtmlFormat(tableau1)
