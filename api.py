@@ -136,7 +136,7 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    """def getPath(self, tableau=None):
+    def getPath(self, tableau=None):
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
@@ -164,7 +164,7 @@ class Tableau:
             for j in range(v):
                 if array[i][j] ==  9999999:
                     array[i][j]= None
-        return tableau"""
+        return tableau
     
         
 
@@ -180,9 +180,15 @@ class Tableau:
         for i in range(len(self.indexToKey)):
             keyI = self.indexToKey[i]  
             for keyJ in self.content[keyI]:
-                if keyJ ==keyI:
+                if keyJ in self.content :
                     j = self.keyToIndex[keyJ] 
                     self.data[i][j] = 1
+                else : 
+                    print(keyJ)
+                 #   self.content[keyJ]= []
+                  #  j = self.keyToIndex[keyJ]
+                   # self.data[i][j] = 1
+                    
     
     def getTableFromFile(self):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
@@ -205,11 +211,11 @@ if __name__== "__main__" :
     tableau1 = Tableau(len(x), len(x) ) 
     tableau1.loadDataFromFile()
     
-    #tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
-    #tableau3 = tableau2.getPath()
+    tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
+    
     
     tableau1.affiche()
     print(' ')
     #tableau2.affiche()
     #displayMatrix.PrintInHtmlFormat(tableau2)
-    displayMatrix.PrintInHtmlFormat(tableau1)
+    displayMatrix.PrintInHtmlFormat(tableau2)
