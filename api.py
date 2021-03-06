@@ -187,7 +187,7 @@ class Tableau:
                     self.content[keyJ]= [] # I add the missing key to the dictionary
                     self.indexToKey.append(keyJ) # I add the missing key to the list indexToKey
                     self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
-                    j = self.keyToIndex[keyJ] #  Get the index a key is given
+                    j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
                     
     
