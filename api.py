@@ -184,10 +184,11 @@ class Tableau:
                     j = self.keyToIndex[keyJ] 
                     self.data[i][j] = 1
                 else : 
-                    print(keyJ)
-                 #   self.content[keyJ]= []
-                  #  j = self.keyToIndex[keyJ]
-                   # self.data[i][j] = 1
+                    self.content[keyJ]= [] # I add the missing key to the dictionary
+                    self.indexToKey.append(keyJ) # I add the missing key to the list indexToKey
+                    self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
+                    j = self.keyToIndex[keyJ] #  Get the index a key is given
+                    self.data[i][j] = 1
                     
     
     def getTableFromFile(self):
@@ -208,14 +209,14 @@ class Tableau:
 if __name__== "__main__" :
     x = load()
     
-    tableau1 = Tableau(len(x), len(x) ) 
+    tableau1 = Tableau(len(x)+1, len(x)+1 ) 
     tableau1.loadDataFromFile()
     
     tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
     
     
-    tableau1.affiche()
+    #tableau1.affiche()
     print(' ')
     #tableau2.affiche()
-    #displayMatrix.PrintInHtmlFormat(tableau2)
     displayMatrix.PrintInHtmlFormat(tableau2)
+    #displayMatrix.PrintInHtmlFormat(tableau2)
