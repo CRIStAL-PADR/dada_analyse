@@ -3,6 +3,7 @@ import include_graph as file
 import displayMatrix
 
 def load(file):
+    """ Prend en paramètre le fichier puis le transforme en dictionnaire"""
     i = 'sources'
     dictionary = {}
     file.content
@@ -31,7 +32,7 @@ class Tableau:
         self.size = [self.ligne, self.colonne]
                 
     def compteColone(self, c, value):
-        """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
+        """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur 'value' """
         count = 0
         for i  in range(len(self.data)):
             for j in range(len(self.data[c])):
@@ -136,7 +137,8 @@ class Tableau:
             dict[keys[i]] = i
         return dict
     
-    def getPath(self, tableau=None):
+    def floydWarshall(self, tableau=None):
+        "Use FLOYDWARSHALL algoritm to find all pairs shortest path  "
        
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
@@ -172,7 +174,8 @@ class Tableau:
     def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
-        self.content = load(content)
+        
+        self.content = load(content) #I load the file
         self.indexToKey = list(self.content.keys()) 
                      
         self.keyToIndex = self.getDictFromFile()
@@ -185,13 +188,15 @@ class Tableau:
             keyI = self.indexToKey[i]  
             for keyJ in self.content[keyI]:
                 if keyJ in self.content :
-                    j = self.keyToIndex[keyJ] 
+                    j = self.keyToIndex[keyJ]
+                    print(j,i)
                     self.data[i][j] = 1
-                else : 
+                else :
                     self.content[keyJ]= [] # I add the missing key to the dictionary
                     self.indexToKey.append(keyJ) # I add the missing key to the list indexToKey
                     self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
+                    print(j, i)
                     self.data[i][j] = 1
                     
             
@@ -200,5 +205,5 @@ if __name__== "__main__" :
    
     tableau1 = Tableau( ) 
     tableau1.loadDataFromFile(file)
-    tableau2 = tableau1.getPath( )
+    #tableau2 = tableau1.getPath( )
     displayMatrix.PrintInHtmlFormat(tableau1)

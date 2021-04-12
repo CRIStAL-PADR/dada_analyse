@@ -9,10 +9,10 @@ def PrintInHtmlFormat(tableau):
         if x ==0:
             print('<td>&nbsp;</td>')
             print('<td>&nbsp;</td>')
-            print( '<td class = "td">{}</td> '.format(x), end = ' ')
-        if x <=9 and x>0:
+            print( '<td class = "td">{}</td> '.format(x))
+        elif x  <=9 and x >0:
             print('<td>{}</td> '.format(x), end = ' ')
-        if x >=10:
+        else : 
             print( '<td>{}</td> '.format(x) , end = ' ')
     print("""
           </tr>
@@ -22,7 +22,7 @@ def PrintInHtmlFormat(tableau):
         keyA = tableau.indexToKey[i]
         keyB = tableau.keyToIndex[keyA]
         print(""" <tr> """)
-        print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(keyB))
+        print('<td>{}</td>'.format(keyA[-5:]),'<td>{}</td>'.format(keyB))
         for j in range(len(tableau.data[i])):
             if tableau.data[i][j] ==None:
                 print('<td>-</td>', end  = ' ')
