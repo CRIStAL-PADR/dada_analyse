@@ -2,7 +2,7 @@
 import include_graph as file
 import displayMatrix
 
-def load():
+def load(file):
     i = 'sources'
     dictionary = {}
     file.content
@@ -19,16 +19,16 @@ def load():
 
    
 class Tableau:
-    def __init__(self, ligne, colonne, defaultValue = None):
+    def __init__(self, ligne=0, colonne=0, defaultValue = None):
         self.ligne = ligne
         self.colonne = colonne
         self.defaultValue = defaultValue
         self.data = []
         self.fillWithValue(self.defaultValue)
         self.indexToKey = []
+        self.content = {}
         self.keyToIndex = {}
-        self.content = load()
-        self.size = [ligne, colonne]
+        self.size = [self.ligne, self.colonne]
                 
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
@@ -137,6 +137,7 @@ class Tableau:
         return dict
     
     def getPath(self, tableau=None):
+       
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
@@ -168,13 +169,16 @@ class Tableau:
     
         
 
-    def loadDataFromFile(self):
+    def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
+        self.content = load(content)
         self.indexToKey = list(self.content.keys()) 
                      
         self.keyToIndex = self.getDictFromFile()
-        
+        self.ligne = len(self.content)+1
+        self.colonne = len(self.content)+1
+        self.size = [len(self.content)+1,len(self.content)+1 ]
         self.fillWithValue(0)
         
         for i in range(len(self.indexToKey)):
@@ -190,33 +194,11 @@ class Tableau:
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
                     
-    
-    def getTableFromFile(self):
-        """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
-        #Complexité = O(i²) => dépend de la taille de content
-        liste = self.getList(self.content)
-        for i in range(len(liste)):
-
-            keys_File = self.indexToKey
-            if liste[i]== keys_File:
-                for j in  range(len(self.content[keys_File])):
-                    for a in range(len(liste)):
-                        if self.content[keys_File][j] == liste[a]:
-                            self.data[i][a] = 2
-            keys_File = 0
             
             
 if __name__== "__main__" :
-    x = load()
-    
-    tableau1 = Tableau(len(x)+1, len(x)+1 ) 
-    tableau1.loadDataFromFile()
-    
-    tableau2 = tableau1.getPath( Tableau(tableau1.size[0], tableau1.size[1]) )
-    
-    
-    #tableau1.affiche()
-    print(' ')
-    #tableau2.affiche()
-    displayMatrix.PrintInHtmlFormat(tableau2)
-    #displayMatrix.PrintInHtmlFormat(tableau2)
+   
+    tableau1 = Tableau( ) 
+    tableau1.loadDataFromFile(file)
+    tableau2 = tableau1.getPath( )
+    displayMatrix.PrintInHtmlFormat(tableau1)
