@@ -1,11 +1,10 @@
 def PrintInHtmlFormat(tableau):
     liste = tableau.getList()
     print ("""
-<html>
-    <table width="70%" border = " 5" align="center" >
-    <link ref = "stylesheet" href = "style.css">
-        <tr>
-""")
+           <html>
+           <table width="70%" border = " 5" align="center" >
+           <link ref = "stylesheet" href = "style.css">
+           <tr>""")
     for x in range(len(liste)):
         if x ==0:
             print('<td>&nbsp;</td>')
@@ -30,8 +29,7 @@ def PrintInHtmlFormat(tableau):
             else:
                 print('<td>{}</td>'.format( tableau.data[i][j]) , end  = ' ')
         print('<td>{}</td>'.format(c))
-    print(""" <tr> """)
-print("""
-    </table>
-</h
-""")
+    print(""" </tr> """)
+    print("""
+          </table>
+          </html>""")
