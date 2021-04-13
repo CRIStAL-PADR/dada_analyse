@@ -18,7 +18,6 @@ def load(file):
 
     return dictionary
 
-
 class Tableau:
     def __init__(self, ligne=0, colonne=0, defaultValue = None):
         self.ligne = ligne
@@ -190,20 +189,40 @@ class Tableau:
                 if keyJ in self.content :
                     j = self.keyToIndex[keyJ]
                     self.data[i][j] = 1
-                    print('&&& =>','good')
                 else :
                     self.content.update({keyJ : [keyI]}) # I add the missing key to the dictionary
                     self.indexToKey.append(keyJ) # I add the missing key to the list indexToKey
                     self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
-                    print('**** =>','good')
 
+    def createNewTable(self, oldTableau, newTableau, taille):
 
+        array = newTableau.data
+        if oldTableau == None : 
+            raise RuntimeError()
+        for i in range(taille):
+            soustab = []
+            for j in range(taille):
+                a = oldTableau.data[i][j] 
+                soustab.append(a)
+            array.append(soustab)
+        return newTableau
 
 if __name__== "__main__" :
 
     tableau1 = Tableau( )
+    tableau2  =Tableau()
     tableau1.loadDataFromFile(file)
-    #tableau2 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]) )
-    displayMatrix.PrintInHtmlFormat(tableau1)
+    
+    tableau2 = tableau1.createNewTable(tableau1, tableau2, 30)
+
+
+    """for i in range(30):
+        for j in range(30):
+            print(tableau2.data[i][j], end = ' ')
+        print(' ') """
+    
+    displayMatrix.PrintInHtmlFormat(tableau1,tableau2)
+    #tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]) )
+   
