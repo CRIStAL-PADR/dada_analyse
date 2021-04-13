@@ -12,13 +12,13 @@ def load(file):
         for j in file.content[key].keys():
             if j == i:
                 for a in file.content[key][j]:
-                    liste.append(a)  
+                    liste.append(a)
                 dictionary[key] = liste
                 liste = []
-            
+
     return dictionary
 
-   
+
 class Tableau:
     def __init__(self, ligne=0, colonne=0, defaultValue = None):
         self.ligne = ligne
@@ -30,7 +30,7 @@ class Tableau:
         self.content = {}
         self.keyToIndex = {}
         self.size = [self.ligne, self.colonne]
-                
+
     def compteColone(self, c, value):
         """ retourne le nombre de foix ou sur une ligne 'l' il y a la valeur 'value' """
         count = 0
@@ -40,25 +40,25 @@ class Tableau:
                     count = count+1
                     break
         return count
-    
+
     def compterLigne(self, l, value = None):
         """retourne le nombre de foix ou sur une ligne 'l' il y a la valeur "value" """
         count = 0
         for j in range(len(self.data[l])):
             if (self.data[l][j]!=value and self.data[l][j]!=0):
-                count = count+1        
+                count = count+1
         return count
-              
+
     def affiche(self):
         """This function takes a generated file as a parameter and displays a dependency graph between the different
         files as an adjacency matrix shape
-        
+
                                      | 0 1 2 3 4 5 6 7
-        --------------------------------------------------- 
-        file1.cpp                  0 | 1 0 0 0 1 0 0 1 |  3 
+        ---------------------------------------------------
+        file1.cpp                  0 | 1 0 0 0 1 0 0 1 |  3
         file2.cpp                  1 | 0 1 0 0 1 0 0 0 |  2
-        file3.cpp                  2 | 0 0 1 0 1 0 0 0 |  2 
-        file2.h                    3 | 0 0 0 1 0 0 0 0 |  1 
+        file3.cpp                  2 | 0 0 1 0 1 0 0 0 |  2
+        file2.h                    3 | 0 0 0 1 0 0 0 0 |  1
         file3.h                    4 | 0 0 0 0 1 0 0 0 |  1
         /ceci/.../findfichier.h    5 | 0 0 0 0 0 1 0 0 |  1
         file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
@@ -71,64 +71,64 @@ class Tableau:
             if x<=9 and x>0:
                 print('',x, '', end = '')
             if x >9 :
-                print('',x,end = '') 
+                print('',x,end = '')
         print('')
-       
+
         for x in range(len(liste)):
             print('------', end = '')
         for i in range(len(self.content)):
-            print('  ') 
+            print('  ')
             c = self.compterLigne(i)
             keyA = self.indexToKey[i]
             keyB = self.keyToIndex[keyA]
-           
+
             if len(keyA)<9:
                 if keyB<=9:
                     print(keyA,'                 ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA,'                 ',keyB, ' ', end = '|')  
+                    print(keyA,'                 ',keyB, ' ', end = '|')
                 if keyB >99 :
-                    print(keyA,'                 ',keyB, '',end = '|') 
-                    
+                    print(keyA,'                 ',keyB, '',end = '|')
+
             if len(keyA)==9:
                 if keyB<=9:
                     print(keyA, '               ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA,'               ',keyB, ' ', end = '|') 
+                    print(keyA,'               ',keyB, ' ', end = '|')
                 if keyB>99 :
-                    print(keyA,'             ',keyB,'', end = '|') 
-            
+                    print(keyA,'             ',keyB,'', end = '|')
+
             if len(keyA)>9:
                 if keyB<=9:
                     print(keyA[:3]+"..."+keyA[-5:], '             ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA[:3]+"..."+keyA[-4:],'              ',keyB, ' ', end = '|') 
+                    print(keyA[:3]+"..."+keyA[-4:],'              ',keyB, ' ', end = '|')
                 if keyB >99 :
-                    print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|') 
-                    
+                    print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|')
+
             for j in range(len(self.data[i])):
-                
+
                 if self.data[i][j] ==None:
                     print('-', end  = '  ')
                 else:
                     print(self.data[i][j], end = '  ')
-                
+
             print(' ','|', c)
 
     def fillWithValue(self, newValue):
         """ This function is used to fill the matrix with new value"""
-        self.data = [] 
-        for x in range(self.ligne):      
-            sousTab = []                 
-            for y in range(self.colonne): 
-                sousTab.append(newValue)                                            
+        self.data = []
+        for x in range(self.ligne):
+            sousTab = []
+            for y in range(self.colonne):
+                sousTab.append(newValue)
             self.data.append(sousTab)
-             
+
     def getList(self):
         """ This function returns the dictionaries keys of the content file as a list """
         return [*self.content]
 
-    
+
     def getDictFromFile(self):
         """ this function returns a dictionary containing the files and their indexes """
         dict = {}
@@ -136,18 +136,18 @@ class Tableau:
         for i in range(len(keys)):
             dict[keys[i]] = i
         return dict
-    
+
     def floydWarshall(self, tableau=None):
         "Use FLOYDWARSHALL algoritm to find all pairs shortest path  "
-       
+
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
-            raise RuntimeError()    
-            
+            raise RuntimeError()
+
         tableau.indexToKey = self.indexToKey.copy()
         tableau.keyToIndex = self.keyToIndex.copy()
-        
+
         array =  tableau.data
         v = len(array)
         for i in range(v):
@@ -168,42 +168,42 @@ class Tableau:
                 if array[i][j] ==  9999999:
                     array[i][j]= None
         return tableau
-    
-        
+
+
 
     def loadDataFromFile(self, content):
         """ returns a new array, containing zeros when there is no link between two files and a 1 when there is a link """
         #Complexité = O(n²) => dépend de la taille de content au carré
-        
+
         self.content = load(content) #I load the file
-        self.indexToKey = list(self.content.keys()) 
-                     
+        self.indexToKey = list(self.content.keys())
+
         self.keyToIndex = self.getDictFromFile()
         self.ligne = len(self.content)+1
         self.colonne = len(self.content)+1
-        self.size = [len(self.content)+1,len(self.content)+1 ]
+        self.size = [len(self.content)+1,len(self.content)+1]
         self.fillWithValue(0)
-        
+
         for i in range(len(self.indexToKey)):
-            keyI = self.indexToKey[i]  
+            keyI = self.indexToKey[i]
             for keyJ in self.content[keyI]:
                 if keyJ in self.content :
                     j = self.keyToIndex[keyJ]
-                    print(j,i)
                     self.data[i][j] = 1
+                    print('&&& =>','good')
                 else :
-                    self.content[keyJ]= [] # I add the missing key to the dictionary
+                    self.content.update({keyJ : [keyI]}) # I add the missing key to the dictionary
                     self.indexToKey.append(keyJ) # I add the missing key to the list indexToKey
                     self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
-                    print(j, i)
                     self.data[i][j] = 1
-                    
-            
-            
+                    print('**** =>','good')
+
+
+
 if __name__== "__main__" :
-   
-    tableau1 = Tableau( ) 
+
+    tableau1 = Tableau( )
     tableau1.loadDataFromFile(file)
-    #tableau2 = tableau1.getPath( )
+    #tableau2 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]) )
     displayMatrix.PrintInHtmlFormat(tableau1)
