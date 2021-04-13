@@ -1,5 +1,6 @@
-def PrintInHtmlFormat(tableau):
-    liste = tableau.getList()
+def PrintInHtmlFormat(oldtableau, newtableau):
+    liste = oldtableau.getList()
+    liste = liste[:30]
     print ("""
            <html>
            <table width="70%" border = " 5" align="center" >
@@ -17,17 +18,17 @@ def PrintInHtmlFormat(tableau):
     print("""
           </tr>
           """)
-    for i in range(len(tableau.data)):
-        c = tableau.compterLigne(i)
-        keyA = tableau.indexToKey[i]
-        keyB = tableau.keyToIndex[keyA]
+    for i in range(len(newtableau.data)):
+        c = newtableau.compterLigne(i)
+        keyA = oldtableau.indexToKey[i]
+        keyB = oldtableau.keyToIndex[keyA]
         print(""" <tr> """)
-        print('<td>{}</td>'.format(keyA[-5:]),'<td>{}</td>'.format(keyB))
-        for j in range(len(tableau.data[i])):
-            if tableau.data[i][j] ==None:
+        print('<td>{}</td>'.format(keyA[-74:]),'<td>{}</td>'.format(keyB))
+        for j in range(len(newtableau.data[i])):
+            if newtableau.data[i][j] ==None:
                 print('<td>-</td>', end  = ' ')
             else:
-                print('<td>{}</td>'.format( tableau.data[i][j]) , end  = ' ')
+                print('<td>{}</td>'.format( newtableau.data[i][j]) , end  = ' ')
         print('<td>{}</td>'.format(c))
     print(""" </tr> """)
     print("""
