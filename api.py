@@ -230,9 +230,9 @@ if __name__== "__main__" :
     tableau2 = Tableau()
     tableau1.loadDataFromFile(file)
     
-    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 30, 1)
-    
-    tableau2.affiche()
-    #displayMatrix.PrintInHtmlFormat(tableau1,tableau2)
-    #tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
+    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 40, 1)
+   
+    tableau3 = tableau2.floydWarshall(Tableau(tableau2.size[0], tableau2.size[1]))
+
+    displayMatrix.PrintInHtmlFormat(tableau3)
    
