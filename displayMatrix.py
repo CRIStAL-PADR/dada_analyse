@@ -1,5 +1,5 @@
 def PrintInHtmlFormat(tableau):
-    couleur = { 0 : "#FFFF00" ,1 : "#00FF00", 2 :"#FFFF00" , 3 : "##c4c56d", 4 : "#124002" }
+    couleur = { 0 : "#FFFF00" ,1 : "#00FF00", 2 :" #f5ce62" , 3 : "#b0be6e", 4 : "#a4c073" , 5 : " #ecac67", 6 : "#e5926b", 7 : "#ecac67"}
     liste = tableau.indexToKey
     print ("""
     <html>
