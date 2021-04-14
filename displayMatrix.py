@@ -1,9 +1,9 @@
 def PrintInHtmlFormat(tableau):
+    couleur = { 0 : "#FFFF00" ,1 : "#00FF00", 2 :"#FFFF00" , 3 : "##c4c56d", 4 : "#124002" }
     liste = tableau.indexToKey
     print ("""
     <html>
     <table width="70%" border = " 5" align="center" >
-    <link ref = "stylesheet" href = "style.css">
         <tr>
     """)
     for x in range(len(liste)):
@@ -28,7 +28,8 @@ def PrintInHtmlFormat(tableau):
             if tableau.data[i][j] ==None:
                 print('<td>-</td>', end  = ' ')
             else:
-                print('<td>{}</td>'.format( tableau.data[i][j]) , end  = ' ')
+                keyC = tableau.data[i][j]
+                print('<td style="background-color : {}">{}</td>'.format(couleur[keyC],tableau.data[i][j]) , end  = ' ')
         print('<td>{}</td>'.format(c))
     print(""" <tr> """)
     print("""
