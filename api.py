@@ -63,10 +63,11 @@ class Tableau:
         file5.h                    6 | 0 0 0 0 0 1 1 0 |  2
         file1.h                    7 | 0 0 0 0 0 0 0 0 |  0
         """
-        liste = self.getList()
+        liste = self.indexToKey
+        
         for x in range(len(liste)):
             if x == 0:
-                print('                              ',x, end = ' ')
+                print('                                                       ',x, end = ' ')
             if x<=9 and x>0:
                 print('',x, '', end = '')
             if x >9 :
@@ -75,7 +76,7 @@ class Tableau:
 
         for x in range(len(liste)):
             print('------', end = '')
-        for i in range(len(self.content)):
+        for i in range(len(liste)):
             print('  ')
             c = self.compterLigne(i)
             keyA = self.indexToKey[i]
@@ -99,11 +100,11 @@ class Tableau:
 
             if len(keyA)>9:
                 if keyB<=9:
-                    print(keyA[:3]+"..."+keyA[-5:], '             ',keyB, '  ', end = '|')
+                    print(keyA[:3]+"..."+keyA[-30:], '             ',keyB, '  ', end = '|')
                 if keyB >9 and keyB <=99:
-                    print(keyA[:3]+"..."+keyA[-4:],'              ',keyB, ' ', end = '|')
+                    print(keyA[:3]+"..."+keyA[-29:],'              ',keyB, ' ', end = '|')
                 if keyB >99 :
-                    print(keyA[:3]+"..."+keyA[-3:],'            ',keyB,'', end = '|')
+                    print(keyA[:3]+"..."+keyA[-28:],'            ',keyB,'', end = '|')
 
             for j in range(len(self.data[i])):
 
@@ -196,33 +197,42 @@ class Tableau:
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
 
-    def createNewTable(self, oldTableau, newTableau, taille):
-
+    def createNewTable(self, oldTableau, newTableau, start , stop, step):
+        """ When an array is given as a parameter, returns an array of smaller size"""
+        
         array = newTableau.data
         if oldTableau == None : 
             raise RuntimeError()
-        for i in range(taille):
+
+        newTableau.ligne = stop - start # mis à jour des tailles du tableau
+        newTableau.colonne = newTableau.ligne
+        newTableau.size = [newTableau.ligne, newTableau.colonne]
+
+        newTableau.indexToKey = oldTableau.indexToKey[start: stop] # mis à jour de indexToKey
+
+        
+        keys = list(oldTableau.content.keys())
+        keys = keys[start : stop]
+        for i in range(len(keys)):
+            newTableau.keyToIndex[keys[i]] = i  # mis à jour de keyTo index
+
+        for i in range(start, stop, step):
             soustab = []
-            for j in range(taille):
+            for j in range(start, stop, step):
                 a = oldTableau.data[i][j] 
-                soustab.append(a)
+                soustab.append(a)    # remplissage du nouveau tableau
             array.append(soustab)
         return newTableau
 
 if __name__== "__main__" :
 
     tableau1 = Tableau( )
-    tableau2  =Tableau()
+    tableau2 = Tableau()
     tableau1.loadDataFromFile(file)
     
-    tableau2 = tableau1.createNewTable(tableau1, tableau2, 30)
-
-
-    """for i in range(30):
-        for j in range(30):
-            print(tableau2.data[i][j], end = ' ')
-        print(' ') """
+    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 30, 1)
     
-    displayMatrix.PrintInHtmlFormat(tableau1,tableau2)
-    #tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]) )
+    tableau2.affiche()
+    #displayMatrix.PrintInHtmlFormat(tableau1,tableau2)
+    #tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
    
