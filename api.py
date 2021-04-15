@@ -139,7 +139,7 @@ class Tableau:
 
     def floydWarshall(self, tableau=None):
         "Use FLOYDWARSHALL algoritm to find all pairs shortest path  "
-
+    
         if tableau == None:
             tableau = Tableau(self.size[0],self.size[1])
         elif tableau.size != self.size:
@@ -197,7 +197,7 @@ class Tableau:
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
 
-    def createNewTable(self, oldTableau, newTableau, start , stop, step):
+    def createNewTable(self, oldTableau, newTableau, start , stop):
         """ When an array is given as a parameter, returns an array of smaller size"""
         
         array = newTableau.data
@@ -208,31 +208,35 @@ class Tableau:
         newTableau.colonne = newTableau.ligne
         newTableau.size = [newTableau.ligne, newTableau.colonne]
 
-        newTableau.indexToKey = oldTableau.indexToKey[start: stop] # mis à jour de indexToKey
+        newTableau.indexToKey = oldTableau.indexToKey.copy()
+        newTableau.indexToKey = newTableau.indexToKey[start: stop] # mis à jour de indexToKey
 
-        
         keys = list(oldTableau.content.keys())
         keys = keys[start : stop]
         for i in range(len(keys)):
             newTableau.keyToIndex[keys[i]] = i  # mis à jour de keyTo index
 
-        for i in range(start, stop, step):
+        for i in range(start, stop):
             soustab = []
-            for j in range(start, stop, step):
+            for j in range(start, stop):
                 a = oldTableau.data[i][j] 
                 soustab.append(a)    # remplissage du nouveau tableau
             array.append(soustab)
         return newTableau
 
+
 if __name__== "__main__" :
 
     tableau1 = Tableau( )
     tableau2 = Tableau()
+    tableau3 = Tableau()
     tableau1.loadDataFromFile(file)
     
-    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 40, 1)
-   
-    tableau3 = tableau2.floydWarshall(Tableau(tableau2.size[0], tableau2.size[1]))
+    
+    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 40)
+    
+    tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
+
 
     displayMatrix.PrintInHtmlFormat(tableau3)
    
