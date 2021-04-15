@@ -23,14 +23,14 @@ def PrintInHtmlFormat(tableau):
         keyA = tableau.indexToKey[i]
         keyB = tableau.keyToIndex[keyA]
         print(""" <tr> """)
-        print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(keyB))
+        print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(c))
         for j in range(len(tableau.data[i])):
             if tableau.data[i][j] ==None:
                 print('<td>-</td>', end  = ' ')
             else:
                 keyC = tableau.data[i][j]
                 print('<td style="background-color : {}">{}</td>'.format(couleur[keyC],tableau.data[i][j]) , end  = ' ')
-        print('<td>{}</td>'.format(c))
+        print('<td>{}</td>'.format(keyB))
     print(""" <tr> """)
     print("""
     </table>
