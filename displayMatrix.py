@@ -1,5 +1,16 @@
+# -*-coding: utf-*-
+def getColor(val):
+    color = { 0 : "#FF00FF"  ,1 : "#00FF00", 2 :" #f5ce62" , 3 : "#b0be6e", 4 : "#a4c073" , 5 : " #ecac67", 6 : "#e5926b", 7 : "#ecac67", 8 : "#00FF00", 9 :"#FFFF00", 10 : " #008080"}
+    if (val< 0):
+        val = 0
+    elif(val>=10):
+        val = 10
+    for key, value in color.items():
+        if key == val:
+            return value
+
 def PrintInHtmlFormat(tableau):
-    couleur = { 0 : "#FFFF00" ,1 : "#00FF00", 2 :" #f5ce62" , 3 : "#b0be6e", 4 : "#a4c073" , 5 : " #ecac67", 6 : "#e5926b", 7 : "#ecac67"}
+    
     liste = tableau.indexToKey
     print ("""
     <html>
@@ -29,7 +40,8 @@ def PrintInHtmlFormat(tableau):
                 print('<td>-</td>', end  = ' ')
             else:
                 keyC = tableau.data[i][j]
-                print('<td style="background-color : {}">{}</td>'.format(couleur[keyC],tableau.data[i][j]) , end  = ' ')
+                color = getColor(keyC)
+                print('<td style="background-color : {}">{}</td>'.format(color,tableau.data[i][j]) , end  = ' ')
         print('<td>{}</td>'.format(keyB))
     print(""" <tr> """)
     print("""
