@@ -1,15 +1,6 @@
-import os, sys
-from PIL import Image
+# -*-coding: utf-*-
+import imgkit
 
-size = (128,128)
+with open('test.html') as f:
+    imgkit.from_file(f, 'tableau.jpg')
 
-infile = open("test.html")
-for infile in sys.argv[1:]:
-    outfile = os.path.splitext(infile)[0] + ".thumbnail"
-    if infile != outfile:
-        try:
-            with Image.open(infile) as im:
-                im.thumbnail(size)
-                im.save(outfile, "JPEG")
-        except OSError:
-            print("cannot create thumbnail for", infile)
