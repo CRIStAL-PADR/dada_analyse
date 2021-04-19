@@ -5,7 +5,7 @@ from PIL import Image
 
 def getColor(val):
     """ This function takes a key as a parameter and returns the corresponding color """ 
-    color = { 0 : (0,0,102)  ,1 :(0,0,204), 2 :(0,153,102) , 3 :(51,255,204), 4 :(102,0,102), 5 : (169,169,169) , 6 :(0,136,68), 7 : (0,153,102), 8 : (153,0,0), 9 :(51,0,0), 10 : (153,51,254)}
+    color = { 0 : (255,255,255) , 1 :(0,0,204), 2 :(0,153,102) , 3 :(51,255,204), 4 :(102,0,102), 5 : (169,169,169) , 6 :(0,136,68), 7 : (0,153,102), 8 : (153,0,0), 9 :(51,0,0), 10 : (153,51,254)}
     if (val< 0):
         val = 0
     elif(val>=10):
@@ -14,10 +14,9 @@ def getColor(val):
         if key == val:
             return value
 
-def drawSparseMatrixFromTable( matrice):
+def drawSparseMatrixFromTable( matrice,nom):
     """ This function is used to create from an array an image where the pixels correspond to the value of the indices contained in the array"""
     a = matrice.size[0]
-    print(a)
     b = matrice.size[1]
     new_im  = Image.new('RGB', (a,b), (255,255,255))
     for i in range(b):
@@ -28,7 +27,7 @@ def drawSparseMatrixFromTable( matrice):
                 keyColor = matrice.data[i][j]
             color = getColor(keyColor)
             new_im.putpixel( (i, j), color )
-    new_im.save("MonImage.png", "PNG")
+    new_im.save(nom)
 
 def load(file):
     """ Takes the file as a parameter then transforms it into a dictionary"""
@@ -262,5 +261,6 @@ if __name__== "__main__" :
 
     tableau2 = tableau1.createNewTable(tableau1, 10, 40)
     
-    tableau3 = tableau2.floydWarshall(Tableau(tableau2.size[0], tableau2.size[1]))
-    drawSparseMatrixFromTable(tableau3)
+    tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
+    drawSparseMatrixFromTable(tableau3, "tableau.jpg")
+    displayMatrix.PrintInHtmlFormat(tableau3)
