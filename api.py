@@ -4,6 +4,7 @@ import displayMatrix
 from PIL import Image
 
 def getColor(val):
+    """ """ 
     color = { 0 : (0,0,102)  ,1 :(0,0,204), 2 :(0,153,102) , 3 :(51,255,204), 4 :(102,0,102), 5 : (169,169,169) , 6 :(0,136,68), 7 : (0,153,102), 8 : (153,0,0), 9 :(51,0,0), 10 : (153,51,254)}
     if (val< 0):
         val = 0
@@ -14,8 +15,9 @@ def getColor(val):
             return value
 
 def drawSparseMatrixFromTable( matrice):
-
+    """ Cette fonction permet de créer à partir d'un tableau une image oû les pixels correspondent au valeur des indices contenues dans le tableau """
     a = matrice.size[0]
+    print(a)
     b = matrice.size[1]
     new_im  = Image.new('RGB', (a,b), (255,255,255))
     for i in range(b):
