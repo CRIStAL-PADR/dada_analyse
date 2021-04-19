@@ -1,6 +1,7 @@
 # -*-coding: utf-*-
 def getColor(val):
-    color = { 0 : "#FF00FF"  ,1 : "#00FF00", 2 :" #f5ce62" , 3 : "#b0be6e", 4 : "#a4c073" , 5 : " #ecac67", 6 : "#e5926b", 7 : "#ecac67", 8 : "#00FF00", 9 :"#FFFF00", 10 : " #008080"}
+    """This function takes a key as a parameter and returns the corresponding color """
+    color = { 0 : "#000066"  ,1 :"#0000CC" , 2 :"#009966" , 3 : "#33FFCC", 4 : "#660066" , 5 : "#660066", 6 : "#e5926b", 7 : "#ecac67", 8 : "#00FF00", 9 :"#FFFF00", 10 : " #008080"}
     if (val< 0):
         val = 0
     elif(val>=10):

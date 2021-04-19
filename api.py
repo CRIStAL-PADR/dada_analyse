@@ -4,7 +4,7 @@ import displayMatrix
 from PIL import Image
 
 def getColor(val):
-    """ """ 
+    """ This function takes a key as a parameter and returns the corresponding color """ 
     color = { 0 : (0,0,102)  ,1 :(0,0,204), 2 :(0,153,102) , 3 :(51,255,204), 4 :(102,0,102), 5 : (169,169,169) , 6 :(0,136,68), 7 : (0,153,102), 8 : (153,0,0), 9 :(51,0,0), 10 : (153,51,254)}
     if (val< 0):
         val = 0
@@ -15,7 +15,7 @@ def getColor(val):
             return value
 
 def drawSparseMatrixFromTable( matrice):
-    """ Cette fonction permet de créer à partir d'un tableau une image oû les pixels correspondent au valeur des indices contenues dans le tableau """
+    """ This function is used to create from an array an image where the pixels correspond to the value of the indices contained in the array"""
     a = matrice.size[0]
     print(a)
     b = matrice.size[1]
@@ -31,7 +31,7 @@ def drawSparseMatrixFromTable( matrice):
     new_im.save("MonImage.png", "PNG")
 
 def load(file):
-    """ Prend en paramètre le fichier puis le transforme en dictionnaire"""
+    """ Takes the file as a parameter then transforms it into a dictionary"""
     i = 'sources'
     dictionary = {}
     file.content
