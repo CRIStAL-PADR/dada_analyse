@@ -2,7 +2,31 @@
 import include_graph as file
 import displayMatrix
 from PIL import Image
-from PIL import ImageDraw
+
+def getColor(val):
+    color = { 0 : (0,0,102)  ,1 :(0,0,204), 2 :(0,153,102) , 3 :(51,255,204), 4 :(102,0,102), 5 : (169,169,169) , 6 :(0,136,68), 7 : (0,153,102), 8 : (153,0,0), 9 :(51,0,0), 10 : (153,51,254)}
+    if (val< 0):
+        val = 0
+    elif(val>=10):
+        val = 10
+    for key, value in color.items():
+        if key == val:
+            return value
+
+def drawSparseMatrixFromTable( matrice):
+
+    a = matrice.size[0]
+    b = matrice.size[1]
+    new_im  = Image.new('RGB', (a,b), (255,255,255))
+    for i in range(b):
+        for j in range(a):
+            if (matrice.data[i][j] == None):
+                keyColor = 0
+            else:
+                keyColor = matrice.data[i][j]
+            color = getColor(keyColor)
+            new_im.putpixel( (i, j), color )
+    new_im.save("MonImage.png", "PNG")
 
 def load(file):
     """ Prend en paramètre le fichier puis le transforme en dictionnaire"""
@@ -237,3 +261,4 @@ if __name__== "__main__" :
     tableau2 = tableau1.createNewTable(tableau1, 10, 40)
     
     tableau3 = tableau2.floydWarshall(Tableau(tableau2.size[0], tableau2.size[1]))
+    drawSparseMatrixFromTable(tableau3)
