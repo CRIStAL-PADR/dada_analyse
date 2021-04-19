@@ -1,6 +1,8 @@
 # -*-coding: utf-*-
 import include_graph as file
 import displayMatrix
+from PIL import Image
+from PIL import ImageDraw
 
 def load(file):
     """ Prend en paramètre le fichier puis le transforme en dictionnaire"""
@@ -196,10 +198,12 @@ class Tableau:
                     self.keyToIndex = self.getDictFromFile() # Updates the KeyToIndex dictionary
                     j = self.keyToIndex[keyJ] #  Get the index when a key is given
                     self.data[i][j] = 1
-
-    def createNewTable(self, oldTableau, newTableau, start , stop):
+    
+    def createNewTable(self, oldTableau, start , stop):
         """ When an array is given as a parameter, returns an array of smaller size"""
-        
+
+        newTableau = Tableau()
+
         array = newTableau.data
         if oldTableau == None : 
             raise RuntimeError()
@@ -228,15 +232,8 @@ class Tableau:
 if __name__== "__main__" :
 
     tableau1 = Tableau( )
-    tableau2 = Tableau()
-    tableau3 = Tableau()
     tableau1.loadDataFromFile(file)
-    
-    
-    tableau2 = tableau1.createNewTable(tableau1, tableau2,10, 40)
-    
-    tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
 
-
-    displayMatrix.PrintInHtmlFormat(tableau3)
-   
+    tableau2 = tableau1.createNewTable(tableau1, 10, 40)
+    
+    tableau3 = tableau2.floydWarshall(Tableau(tableau2.size[0], tableau2.size[1]))
