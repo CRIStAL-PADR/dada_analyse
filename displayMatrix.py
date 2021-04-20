@@ -12,7 +12,7 @@ def getColor(val):
 
 def PrintInHtmlFormat(tableau):
     
-    liste = tableau.indexToKey
+    liste = tableau.index_to_key
     print ("""
     <html>
     <table width="70%" border = " 5" align="center" >
@@ -31,9 +31,9 @@ def PrintInHtmlFormat(tableau):
           </tr>
           """)
     for i in range(len(tableau.data)):
-        c = tableau.compterLigne(i)
-        keyA = tableau.indexToKey[i]
-        keyB = tableau.keyToIndex[keyA]
+        c = tableau.compter_ligne(i)
+        keyA = tableau.index_to_key[i]
+        keyB = tableau.key_to_index[keyA]
         print(""" <tr> """)
         print('<td>{}</td>'.format(keyA),'<td>{}</td>'.format(c))
         for j in range(len(tableau.data[i])):
