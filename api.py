@@ -10,17 +10,15 @@ def getColor(val):
         val = 0
     elif(val>=10):
         val = 10
-    for key, value in color.items():
-        if key == val:
-            return value
+    return color[val]
 
 def drawSparseMatrixFromTable( matrice,nom):
     """ This function is used to create from an array an image where the pixels correspond to the value of the indices contained in the array"""
     a = matrice.size[0]
     b = matrice.size[1]
     new_im  = Image.new('RGB', (a,b), (255,255,255))
-    for i in range(b):
-        for j in range(a):
+    for i in range(a):
+        for j in range(b):
             if (matrice.data[i][j] == None):
                 keyColor = 0
             else:
@@ -263,4 +261,4 @@ if __name__== "__main__" :
     
     tableau3 = tableau1.floydWarshall(Tableau(tableau1.size[0], tableau1.size[1]))
     drawSparseMatrixFromTable(tableau3, "tableau.jpg")
-    displayMatrix.PrintInHtmlFormat(tableau3)
+    displayMatrix.PrintInHtmlFormat(tableau2)
