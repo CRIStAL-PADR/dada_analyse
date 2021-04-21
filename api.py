@@ -261,4 +261,4 @@ if __name__ == "__main__":
     tableau2 = tableau1.create_new_table(tableau1, 10, 50)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
     draw_sparse_matrix_from_table(tableau1, "tableau.jpg")
-    tableau3.affiche()
+    displayMatrix.PrintInHtmlFormat(tableau3)

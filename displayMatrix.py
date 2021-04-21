@@ -1,5 +1,5 @@
 # -*-coding: utf-*-
-def getColor(val):
+def get_color(val):
     """This function takes a key as a parameter and returns the corresponding color """
     color = { 0 : "#000066"  ,1 :"#0000CC" , 2 :"#009966" , 3 : "#33FFCC", 4 : "#660066" , 5 : "#660066", 6 : "#e5926b", 7 : "#ecac67", 8 : "#00FF00", 9 :"#FFFF00", 10 : " #008080"}
     if (val< 0):
@@ -15,6 +15,25 @@ def PrintInHtmlFormat(tableau):
     liste = tableau.index_to_key
     print ("""
     <html>
+    <style>
+    .content{
+        visibility: hidden;
+        background : #bfbfbf;
+        padding:15px;
+        position: absolute;
+        }
+        .wrapper:hover .content{
+            visibility: visible;
+        }
+        .content::before{
+            content:"";
+            border-style:solid;
+            border-width:0px 10px 10px 10px;
+            border-color : transparent transparent #bfbfbf transparent;
+            position: absolute;
+            top: -10px;
+        }
+    </style>
     <table width="70%" border = " 5" align="center" >
         <tr>
     """)
@@ -41,8 +60,8 @@ def PrintInHtmlFormat(tableau):
                 print('<td>-</td>', end  = ' ')
             else:
                 keyC = tableau.data[i][j]
-                color = getColor(keyC)
-                print('<td style="background-color : {}">{}</td>'.format(color,tableau.data[i][j]) , end  = ' ')
+                color = get_color(keyC)
+                print('<td class = "wrapper" style="background-color : {}"> <div class = "text"> {} </div> <div class = "content"> {}</div> </td>'.format(color,tableau.data[i][j],keyA), end  = ' ')
         print('<td>{}</td>'.format(keyB))
     print(""" <tr> """)
     print("""
