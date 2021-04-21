@@ -6,8 +6,19 @@ import displayMatrix
 
 
 def get_color(val):
-    """This function takes a key as a parameter and returns the corresponding color"""
-    color = {0: (255, 255, 255), 1: (0, 0, 204), 2: (0, 153, 102), 3: (51, 255, 204), 4: (102, 0, 102), 5: (169, 169, 169), 6: (0, 136, 68), 7: (0, 153, 102), 8: (153, 0, 0), 9: (51, 0, 0), 10: (153, 51, 254)}
+    """This function takes a key as a parameter and returns the
+    corresponding color"""
+    color = {0: (255, 255, 255),
+             1: (0, 0, 204),
+             2: (0, 153, 102),
+             3: (51, 255, 204),
+             4: (102, 0, 102),
+             5: (169, 169, 169),
+             6: (0, 136, 68),
+             7: (0, 153, 102),
+             8: (153, 0, 0),
+             9: (51, 0, 0),
+             10: (153, 51, 254)}
     if val < 0:
         val = 0
     elif val >= 10:
@@ -258,7 +269,7 @@ if __name__ == "__main__":
 
     tableau1 = Tableau()
     tableau1.load_data_from_file(file)
-    tableau2 = tableau1.create_new_table(tableau1, 10, 50)
+    tableau2 = tableau1.create_new_table(tableau1, 10, 500)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
     draw_sparse_matrix_from_table(tableau1, "tableau.jpg")
     displayMatrix.PrintInHtmlFormat(tableau3)
