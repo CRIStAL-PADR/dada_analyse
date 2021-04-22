@@ -57,7 +57,37 @@ def load(fichier):
 
     return dictionary
 
+def create_new_table(old_tableau, start, stop):
+    """ When an array is given as a parameter, returns an
+    array of smaller size"""
+    new_tableau = Tableau()
+    array = new_tableau.data
+    if old_tableau is None:
+        raise RuntimeError()
+
+    new_tableau.ligne = stop - start    # mis à jour des tailles du tableau
+    new_tableau.colonne = new_tableau.ligne
+    new_tableau.size = [new_tableau.ligne, new_tableau.colonne]
+
+    new_tableau.index_to_key = old_tableau.index_to_key.copy()
+    new_tableau.index_to_key = new_tableau.index_to_key[start:stop]
+
+    keys = list(old_tableau.content.keys())
+    keys = keys[start: stop]
+    length_keys = len(keys)
+    for i in range(length_keys):
+        new_tableau.key_to_index[keys[i]] = i  # mis à jour de keyTo index
+
+
+    for i in range(start, stop):
+        soustab = []
+        for j in range(start, stop):
+            soustab.append(
+                old_tableau.data[i][j])    # remplissage du nouveau tableau
+        array.append(soustab)
+    return new_tableau
 class Tableau:
+    """ This class allows you to build an array"""
     def __init__(self, ligne=0, colonne=0, default_value=None):
         self.ligne = ligne
         self.colonne = colonne
@@ -107,7 +137,7 @@ class Tableau:
         for indice in range(len(liste)):
             if indice == 0:
                 print('                                                       ', indice, end=' ')
-            elif indice <= 9 and indice > 0:
+            elif  indice in range(1, 10):
                 print('', indice, '', end='')
             else:
                 print('', indice, end='')
@@ -124,7 +154,7 @@ class Tableau:
             if len(key_a) < 9:
                 if key_b <= 9:
                     print(key_a, '                 ', key_b, '  ', end='|')
-                if key_b > 9 and key_b <= 99:
+                if key_b in range(10, 100):
                     print(key_a, '                 ', key_b, ' ', end='|')
                 if key_b > 99:
                     print(key_a, '                 ', key_b, '', end='|')
@@ -132,7 +162,7 @@ class Tableau:
             if len(key_a) == 9:
                 if key_b <= 9:
                     print(key_a, '               ', key_b, '  ', end='|')
-                if key_b > 9 and key_b <= 99:
+                if key_b in range(10, 100):
                     print(key_a, '               ', key_b, ' ', end='|')
                 if key_b > 99:
                     print(key_a, '             ', key_b, '', end='|')
@@ -140,7 +170,7 @@ class Tableau:
             if len(key_a) > 9:
                 if key_b <= 9:
                     print(key_a[:3]+"..."+key_a[-30:], '             ', key_b, '  ', end='|')
-                if key_b > 9 and key_b <= 99:
+                if key_b in range(10, 100):
                     print(key_a[:3]+"..."+key_a[-29:], '              ', key_b, ' ', end='|')
                 if key_b > 99:
                     print(key_a[:3]+"..."+key_a[-28:], '            ', key_b, '', end='|')
@@ -174,7 +204,8 @@ class Tableau:
         and their indexes """
         dict = {}
         keys = list(self.content.keys())
-        for i in range(len(keys)):
+        length_keys = len(keys)
+        for i in range(length_keys):
             dict[keys[i]] = i
         return dict
 
@@ -189,21 +220,22 @@ class Tableau:
         tableau.key_to_index = self.key_to_index.copy()
 
         array = tableau.data
-        for i in range(len(array)):
-            for j in range(len(array)):
+        length = len(array)
+        for i in range(length):
+            for j in range(length):
                 if i == j:
                     array[i][i] = 0
                 elif self.data[i][j] == 1:
                     array[i][j] = 1
                 else:
                     array[i][j] = 9999999
-        for k in range(len(array)):
-            for i in range(len(array)):
-                for j in range(len(array)):
+        for k in range(length):
+            for i in range(length):
+                for j in range(length):
                     if array[i][j] > array[i][k] + array[k][j]:
                         array[i][j] = array[i][k] + array[k][j]
-        for i in range(len(array)):
-            for j in range(len(array)):
+        for i in range(length):
+            for j in range(length):
                 if array[i][j] == 9999999:
                     array[i][j] = None
         return tableau
@@ -236,40 +268,12 @@ class Tableau:
                     j = self.key_to_index[key_j]
                     self.data[i][j] = 1
 
-    def create_new_table(self, old_tableau, start, stop):
-        """ When an array is given as a parameter, returns an
-        array of smaller size"""
-        new_tableau = Tableau()
-        array = new_tableau.data
-        if old_tableau is None:
-            raise RuntimeError()
-
-        new_tableau.ligne = stop - start    # mis à jour des tailles du tableau
-        new_tableau.colonne = new_tableau.ligne
-        new_tableau.size = [new_tableau.ligne, new_tableau.colonne]
-
-        new_tableau.index_to_key = old_tableau.index_to_key.copy()
-        new_tableau.index_to_key = new_tableau.index_to_key[start:stop]
-
-        keys = list(old_tableau.content.keys())
-        keys = keys[start: stop]
-        for i in range(len(keys)):
-            new_tableau.key_to_index[keys[i]] = i  # mis à jour de keyTo index
-
-        for i in range(start, stop):
-            soustab = []
-            for j in range(start, stop):
-                soustab.append(
-                    old_tableau.data[i][j])    # remplissage du nouveau tableau
-            array.append(soustab)
-        return new_tableau
-
 
 if __name__ == "__main__":
 
     tableau1 = Tableau()
     tableau1.load_data_from_file(file)
-    tableau2 = tableau1.create_new_table(tableau1, 10, 700)
+    tableau2 = create_new_table(tableau1, 10, 50)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
     draw_sparse_matrix_from_table(tableau1, "tableau.jpg")
     display_matrix.print_in_html_format(tableau3)

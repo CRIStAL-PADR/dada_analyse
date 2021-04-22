@@ -56,7 +56,7 @@ def print_in_html_format(tableau):
             print('<td>&nbsp;</td>')
             print('<td>&nbsp;</td>')
             print('<td class = "td">{}</td> '.format(index), end=' ')
-        if index <= 9 and index > 0:
+        if index in range(1, 10):
             print('<td>{}</td> '.format(index), end=' ')
         if index >= 10:
             print('<td>{}</td> '.format(index), end=' ')
