@@ -1,4 +1,7 @@
 # -*-coding: utf-*-
+"""
+    copyright (C) 2021
+"""
 def get_color(val):
     """This function takes a key as a parameter and returns the
     corresponding color """
@@ -21,7 +24,8 @@ def get_color(val):
         if key == val:
             return value
 
-def PrintInHtmlFormat(tableau):   
+def print_in_html_format(tableau):
+    """ This function takes an array as a parameter and displays it in HTML format"""
     liste = tableau.index_to_key
     print("""
     <html>
@@ -47,32 +51,32 @@ def PrintInHtmlFormat(tableau):
     <table width="70%" border = " 5" align="center" >
         <tr>
     """)
-    for x in range(len(liste)):
-        if x == 0:
+    for index in range(len(liste)):
+        if index == 0:
             print('<td>&nbsp;</td>')
             print('<td>&nbsp;</td>')
-            print('<td class = "td">{}</td> '.format(x), end=' ')
-        if x <= 9 and x > 0:
-            print('<td>{}</td> '.format(x), end=' ')
-        if x >= 10:
-            print('<td>{}</td> '.format(x), end=' ')
+            print('<td class = "td">{}</td> '.format(index), end=' ')
+        if index <= 9 and index > 0:
+            print('<td>{}</td> '.format(index), end=' ')
+        if index >= 10:
+            print('<td>{}</td> '.format(index), end=' ')
     print("""
           </tr>
           """)
     for i in range(len(tableau.data)):
-        c = tableau.compter_ligne(i)
-        keyA = tableau.index_to_key[i]
-        keyB = tableau.key_to_index[keyA]
+        count = tableau.compter_ligne(i)
+        key_a = tableau.index_to_key[i]
+        key_b = tableau.key_to_index[key_a]
         print(""" <tr> """)
-        print('<td>{}</td>'.format(keyA), '<td>{}</td>'.format(c))
+        print('<td>{}</td>'.format(key_a), '<td>{}</td>'.format(count))
         for j in range(len(tableau.data[i])):
             if tableau.data[i][j] is None:
                 print('<td>-</td>', end=' ')
             else:
-                keyC = tableau.data[i][j]
-                color = get_color(keyC)
-                print('<td class = "wrapper" style="background-color : {}"> <div class = "text">{}</div> <div class = "content"> {}</div> </td>'.format(color,tableau.data[i][j],keyA), end  = ' ')
-        print('<td>{}</td>'.format(keyB))
+                key_c = tableau.data[i][j]
+                color = get_color(key_c)
+                print('<td class = "wrapper" style="background-color : {}"> <div class = "text">{}</div> <div class = "content"> {}</div> </td>'.format(color, tableau.data[i][j], key_a), end=' ')
+        print('<td>{}</td>'.format(key_b))
     print(""" <tr> """)
     print("""
     </table>
