@@ -1,9 +1,10 @@
-""" """
 # -*-coding: utf-*-
+"""
+    copyright (C) 2021
+"""
 from PIL import Image
 import include_graph as file
-import displayMatrix
-
+import display_matrix
 
 def get_color(val):
     """This function takes a key as a parameter and returns the
@@ -211,8 +212,7 @@ class Tableau:
 
     def load_data_from_file(self, content):
         """ returns a new array, containing zeros when there is no
-        link between two files and a 1 when
-        there is a link"""
+        link between two files and a 1 when there is a link"""
         # I load the file
         self.content = load(content)
         self.index_to_key = list(self.content.keys())
@@ -269,7 +269,7 @@ if __name__ == "__main__":
 
     tableau1 = Tableau()
     tableau1.load_data_from_file(file)
-    tableau2 = tableau1.create_new_table(tableau1, 10, 500)
+    tableau2 = tableau1.create_new_table(tableau1, 10, 700)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
     draw_sparse_matrix_from_table(tableau1, "tableau.jpg")
-    displayMatrix.PrintInHtmlFormat(tableau3)
+    display_matrix.print_in_html_format(tableau3)
