@@ -20,9 +20,7 @@ def get_color(val):
         val = 0
     elif val >= 10:
         val = 10
-    for key, value in color.items():
-        if key == val:
-            return value
+    return color[val]
 
 def print_in_html_format(tableau):
     """ This function takes an array as a parameter and displays it in HTML format"""
@@ -63,6 +61,7 @@ def print_in_html_format(tableau):
     print("""
           </tr>
           """)
+
     for i in range(len(tableau.data)):
         count = tableau.compter_ligne(i)
         key_a = tableau.index_to_key[i]
@@ -75,7 +74,11 @@ def print_in_html_format(tableau):
             else:
                 key_c = tableau.data[i][j]
                 color = get_color(key_c)
-                print('<td class = "wrapper" style="background-color : {}"> <div class = "text">{}</div> <div class = "content"> {}</div> </td>'.format(color, tableau.data[i][j], key_a), end=' ')
+                key_d = tableau.index_to_key[j]
+                print("""<td class = "wrapper" style="background-color : {}">
+                <div class = "text">{}</div>
+                <div class = "content"> {}</div>
+                </td>""".format(color, tableau.data[i][j], key_d), end=' ')
         print('<td>{}</td>'.format(key_b))
     print(""" <tr> """)
     print("""

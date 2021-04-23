@@ -143,8 +143,6 @@ class Tableau:
                 print('', indice, end='')
         print('')
 
-        for _ in range(len(liste)):
-            print('------', end='')
         for i in range(len(liste)):
             print('  ')
             count = self.compter_ligne(i)
@@ -154,25 +152,25 @@ class Tableau:
             if len(key_a) < 9:
                 if key_b <= 9:
                     print(key_a, '                 ', key_b, '  ', end='|')
-                if key_b in range(10, 100):
+                elif key_b in range(10, 100):
                     print(key_a, '                 ', key_b, ' ', end='|')
-                if key_b > 99:
+                else:
                     print(key_a, '                 ', key_b, '', end='|')
 
-            if len(key_a) == 9:
+            elif len(key_a) == 9:
                 if key_b <= 9:
                     print(key_a, '               ', key_b, '  ', end='|')
-                if key_b in range(10, 100):
+                elif key_b in range(10, 100):
                     print(key_a, '               ', key_b, ' ', end='|')
-                if key_b > 99:
+                else:
                     print(key_a, '             ', key_b, '', end='|')
 
-            if len(key_a) > 9:
+            else:
                 if key_b <= 9:
                     print(key_a[:3]+"..."+key_a[-30:], '             ', key_b, '  ', end='|')
-                if key_b in range(10, 100):
+                elif key_b in range(10, 100):
                     print(key_a[:3]+"..."+key_a[-29:], '              ', key_b, ' ', end='|')
-                if key_b > 99:
+                else:
                     print(key_a[:3]+"..."+key_a[-28:], '            ', key_b, '', end='|')
 
             for j in range(len(self.data[i])):
@@ -202,12 +200,12 @@ class Tableau:
     def get_dict_from_file(self):
         """this function returns a dictionary containing the files
         and their indexes """
-        dict = {}
+        dictionary = {}
         keys = list(self.content.keys())
         length_keys = len(keys)
         for i in range(length_keys):
-            dict[keys[i]] = i
-        return dict
+            dictionary[keys[i]] = i
+        return dictionary
 
     def floyd_warshall(self, tableau=None):
         "Use FLOYDWARSHALL algoritm to find all pairs shortest path  "
@@ -273,7 +271,8 @@ if __name__ == "__main__":
 
     tableau1 = Tableau()
     tableau1.load_data_from_file(file)
-    tableau2 = create_new_table(tableau1, 10, 50)
+    tableau2 = create_new_table(tableau1, 300, 500)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
     draw_sparse_matrix_from_table(tableau1, "tableau.jpg")
     display_matrix.print_in_html_format(tableau3)
+    
