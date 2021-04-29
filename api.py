@@ -273,8 +273,8 @@ class Tableau:
                     self.data[i][j] = 1
 
     def count_path_from_tableau(self, tableau):
-        """ Cette fonction prend en paramètre un tableau et retourne un tuple
-            contenant le nom de fichier, le chemin et l'indice, trié selon le chemin
+        """ This function takes an array as a parameter and returns a tuple
+            containing filename, path and index, sorted by path
          """
         length = len(tableau.index_to_key)
         tab = []
@@ -284,8 +284,8 @@ class Tableau:
         return sorted(tab, key=itemgetter(1), reverse=True)
 
     def sorted_tableau(self, tableau, old_tableau):
-        """ Cette fonction prend en paramètre 2 tableau et retourne un nouveau
-         trié selon le nom de fichier qui contient le plus de chemin
+        """ This function takes in parameter 2 array and returns a new
+         sorted by the filename that contains the most path
         """
         liste = self.count_path_from_tableau(tableau)
         new_tableau = Tableau()

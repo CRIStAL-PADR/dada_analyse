@@ -38,9 +38,12 @@ def print_in_html_format(tableau):
             visibility: visible;
         }
         .col{
-            width : 100px !important;
+            width : 50px !important;
             text-align : center;
 
+        }
+        .active:active {
+            background-color : #df2545;
         }
         .content::before{
             content:"";
@@ -51,7 +54,7 @@ def print_in_html_format(tableau):
             top: -10px;
         }
     </style>
-    <table border = " 5" align="center" >
+    <table border = "5" align="center" >
         <tr>
     """)
     for index in range(len(liste)):
@@ -59,9 +62,7 @@ def print_in_html_format(tableau):
             print('<td class = "col" >&nbsp;</td>')
             print('<td class = "col" >&nbsp;</td>')
             print('<td  class = "col">{}</td> '.format(index), end=' ')
-        if index in range(1, 10):
-            print('<td class = "col" >{}</td> '.format(index), end=' ')
-        if index >= 10:
+        if index != 0:
             print('<td class = "col" >{}</td> '.format(index), end=' ')
     print("""
           </tr>
@@ -72,7 +73,7 @@ def print_in_html_format(tableau):
         key_a = tableau.index_to_key[i]
         key_b = tableau.key_to_index[key_a]
         print(""" <tr> """)
-        print('<td id = "{}" >{}</td>'.format(i,key_a[-45:]), '<td class = "col">{}</td>'.format(count))
+        print('<td id = "{}" class="active">{}</td>'.format(i,key_a[-45:]), '<td class = "col">{}</td>'.format(count))
         for j in range(len(tableau.data[i])):
             if tableau.data[i][j] is None:
                 print('<td class = "col" >-</td>', end=' ')
@@ -82,8 +83,8 @@ def print_in_html_format(tableau):
                 key_d = tableau.index_to_key[j]
                 print("""<td class = "wrapper col" style="background-color : {}">
                 <div class = "text">{}</div>
-                <div class =  "content"> <a href = "#{}" >{} </a> </div>
-                </td>""".format(color, tableau.data[i][j], j, key_d), end=' ')
+                <div class =  "content"> <a href ="#{}"> {} {} {}</a> </div>
+                </td>""".format(color, tableau.data[i][j], j, key_d, i, j), end=' ')
         print('<td class = "col" >{}</td>'.format(key_b))
     print(""" <tr> """)
     print("""
