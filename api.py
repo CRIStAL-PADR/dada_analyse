@@ -2,11 +2,11 @@
 """
     copyright (C) 2021
 """
-from typing import NewType
+from operator import itemgetter
 from PIL import Image
 import include_graph as file
 import display_matrix
-from operator import itemgetter, attrgetter
+
 
 def get_color(val):
     """This function takes a key as a parameter and returns the
@@ -271,31 +271,30 @@ class Tableau:
                     self.key_to_index = self.get_dict_from_file()
                     j = self.key_to_index[key_j]
                     self.data[i][j] = 1
-   
+
     def count_path_from_tableau(self, tableau):
-        """ Cette fonction prend en paramètre un tableau et retourne un tuple contenant le nom de fichier, le chemin et l'indice, 
-            trié selon le chemin
+        """ Cette fonction prend en paramètre un tableau et retourne un tuple
+            contenant le nom de fichier, le chemin et l'indice, trié selon le chemin
          """
-        length  = len(tableau.index_to_key)
+        length = len(tableau.index_to_key)
         tab = []
         for i in range(length):
             count = self.compter_ligne(i)
             tab.append((tableau.index_to_key[i], count, i))
-        return sorted(tab, key=itemgetter(1), reverse  = True) 
-    
+        return sorted(tab, key=itemgetter(1), reverse=True)
+
     def sorted_tableau(self, tableau, old_tableau):
-        """ Cette fonction prend en paramètre 2 tableau et retourne un nouveau trié selon le nom de fichier 
-            qui contient le plus de chemin
+        """ Cette fonction prend en paramètre 2 tableau et retourne un nouveau
+         trié selon le nom de fichier qui contient le plus de chemin
         """
         liste = self.count_path_from_tableau(tableau)
         new_tableau = Tableau()
-        length  = len(tableau.index_to_key)
+        length = len(tableau.index_to_key)
         for i in range(length):
             new_tableau.index_to_key.append(liste[i][0]) # je construit mon index_to_key
 
-        
-        for i in range(length):
-            new_tableau.key_to_index[new_tableau.index_to_key[i]] = i # je reconstruit mon key_to_index
+        for i in range(length):  # je reconstruit mon key_to_index
+            new_tableau.key_to_index[new_tableau.index_to_key[i]] = i
 
         new_tableau.ligne = length
         new_tableau.colonne = length
@@ -303,7 +302,7 @@ class Tableau:
         new_tableau.fill_with_value(0)
 
         for i in range(length):
-            key =  old_tableau.content[new_tableau.index_to_key[i]]
+            key = old_tableau.content[new_tableau.index_to_key[i]]
             new_tableau.content[new_tableau.index_to_key[i]] = key
 
         for i in range(len(new_tableau.index_to_key)):
@@ -318,12 +317,11 @@ if __name__ == "__main__":
 
     tableau1 = Tableau()
     tableau1.load_data_from_file(file)
-    tableau2 = create_new_table(tableau1, 30, 50)
+    tableau2 = create_new_table(tableau1, 30, 100)
     tableau3 = tableau2.floyd_warshall(Tableau(tableau2.size[0], tableau2.size[1]))
-    tableau3.affiche()
-    print(' \n')
-    tableau4 = tableau3.sorted_tableau(tableau3,tableau1)
-   
+    tableau4 = tableau3.sorted_tableau(tableau3, tableau1)
     tableau4 = tableau4.floyd_warshall(Tableau(tableau4.ligne, tableau4.colonne))
-    tableau4.affiche()
 
+    display_matrix.print_in_html_format(tableau3)
+    print('\n')
+    display_matrix.print_in_html_format(tableau4)
