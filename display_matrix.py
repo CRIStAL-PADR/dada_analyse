@@ -5,7 +5,7 @@
 def get_color(val):
     """This function takes a key as a parameter and returns the
     corresponding color """
-    color = {0: "#000066",
+    color = {0: "#FFFFFF",
              1: "#0000CC",
              2: "#009966",
              3: "#33FFCC",
@@ -73,7 +73,7 @@ def print_in_html_format(tableau):
         key_a = tableau.index_to_key[i]
         key_b = tableau.key_to_index[key_a]
         print(""" <tr> """)
-        print('<td id = "{}" class="active">{}</td>'.format(i,key_a[-45:]), '<td class = "col">{}</td>'.format(count))
+        print('<td class = "col">{}</td>'.format(key_b), '<td id = "{}" class="active">{}</td>'.format(i,key_a[-45:]), '<td class = "col">{}</td>'.format(count))
         for j in range(len(tableau.data[i])):
             if tableau.data[i][j] is None:
                 print('<td class = "col" >-</td>', end=' ')
@@ -85,7 +85,6 @@ def print_in_html_format(tableau):
                 <div class = "text">{}</div>
                 <div class =  "content"> <a href ="#{}"> {} {} {}</a> </div>
                 </td>""".format(color, tableau.data[i][j], j, key_d, i, j), end=' ')
-        print('<td class = "col" >{}</td>'.format(key_b))
     print(""" <tr> """)
     print("""
     </table>
