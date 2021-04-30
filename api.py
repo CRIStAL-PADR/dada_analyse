@@ -250,23 +250,28 @@ class Tableau:
         # I load the file
         self.content = load(content)
         self.index_to_key = list(self.content.keys())
+        self.get_dict_from_file()
 
-        self.key_to_index = self.get_dict_from_file
-        self.ligne = len(self.content)+1
-        self.colonne = len(self.content)+1
-        self.size = [len(self.content)+1, len(self.content)+1]
+        for v in self.content.values():
+            for d in v:
+                if d not in self.key_to_index.keys():
+                    self.index_to_key.append(d)
+                    self.key_to_index[d]= len(self.index_to_key)
+
+        self.ligne = len(self.index_to_key)+1
+        self.colonne = len(self.index_to_key)+1
+        self.size = [len(self.index_to_key)+1, len(self.index_to_key)+1]
         self.fill_with_value(0)
 
+
+        for k in self.key_to_index.keys():
+            if k not in self.content.keys():
+                self.content[k] = []
+        
         for i in range(len(self.index_to_key)):
             key_i = self.index_to_key[i]
             for key_j in self.content[key_i]:
                 if key_j in self.content:
-                    j = self.key_to_index[key_j]
-                    self.data[i][j] = 1
-                else:
-                    self.content.update({key_j: [key_i]})
-                    self.index_to_key.append(key_j)
-                    self.key_to_index = self.get_dict_from_file()
                     j = self.key_to_index[key_j]
                     self.data[i][j] = 1
 
