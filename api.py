@@ -205,12 +205,10 @@ class Tableau:
     def get_dict_from_file(self):
         """this function returns a dictionary containing the files
         and their indexes """
-        dictionary = {}
         keys = list(self.content.keys())
         length_keys = len(keys)
         for i in range(length_keys):
-            dictionary[keys[i]] = i
-        return dictionary
+            self.key_to_index[keys[i]] = i
 
     def floyd_warshall(self, tableau=None):
         "Use FLOYDWARSHALL algoritm to find all pairs shortest path  "
@@ -273,7 +271,7 @@ class Tableau:
                     self.data[i][j] = 1
 
     def count_path_from_tableau(self, tableau):
-        """ This function takes an array as a parameter and returns a tuple
+        """  This function takes an array as a parameter and returns a tuple
             containing filename, path and index, sorted by path
          """
         length = len(tableau.index_to_key)
