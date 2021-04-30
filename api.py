@@ -249,8 +249,7 @@ class Tableau:
         link between two files and a 1 when there is a link"""
         # I load the file
         self.content = load(content)
-        self.index_to_key = list(self.content.keys())
-        self.get_dict_from_file()
+        self.index_to_key = list(self.content.keys()) 
 
         for v in self.content.values():
             for d in v:
