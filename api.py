@@ -196,12 +196,6 @@ class Tableau:
                 sous_tab.append(new_value)
             self.data.append(sous_tab)
 
-    def get_list(self):
-        """ This function returns the dictionaries keys of
-        the content file as a list """
-        return [*self.content]
-
-
     def get_dict_from_file(self):
         """this function returns a dictionary containing the files
         and their indexes """
